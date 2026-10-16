@@ -1,0 +1,14 @@
+{
+  "name": "bmc_5users",
+  "target": "bmc",
+  "users": 5,
+  "spawn_rate": 2,
+  "duration": "30s",
+  "started_at_utc": "2026-10-16T13:41:03.138648+00:00",
+  "exit_code": 0,
+  "locust_version": "2.46.7",
+  "python_version": "3.14.8",
+  "bmc_url": "https://127.0.0.1:2443",
+  "public_url": "https://jsonplaceholder.typicode.com",
+  "weather_url": "https://wttr.in/Novosibirsk?format=j1"
+}

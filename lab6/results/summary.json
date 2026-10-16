@@ -1,0 +1,75 @@
+{
+  "criteria": {
+    "max_error_percent": 0,
+    "max_p95_ms": 5000,
+    "scope": "All requests including session login/logout; both business reads required"
+  },
+  "maximum_stable_tested_bmc_users": 10,
+  "limitation": "Short runs only; the physical maximum and long-term stability are not established",
+  "profiles": [
+    {
+      "profile": "bmc_1users",
+      "target": "bmc",
+      "users": 1,
+      "requests": 16,
+      "failures": 0,
+      "error_percent": 0.0,
+      "average_ms": 204.19801018749695,
+      "p95_ms": 390.0,
+      "rps": 0.5395593940167053,
+      "duration": "30s",
+      "both_operations_exercised": true,
+      "peak_users_observed": 1,
+      "stable": true,
+      "exit_code": 0
+    },
+    {
+      "profile": "bmc_5users",
+      "target": "bmc",
+      "users": 5,
+      "requests": 70,
+      "failures": 0,
+      "error_percent": 0.0,
+      "average_ms": 329.3841832571031,
+      "p95_ms": 1400.0,
+      "rps": 2.343506472395829,
+      "duration": "30s",
+      "both_operations_exercised": true,
+      "peak_users_observed": 5,
+      "stable": true,
+      "exit_code": 0
+    },
+    {
+      "profile": "bmc_10users",
+      "target": "bmc",
+      "users": 10,
+      "requests": 122,
+      "failures": 0,
+      "error_percent": 0.0,
+      "average_ms": 744.9540206967255,
+      "p95_ms": 2000.0,
+      "rps": 4.00765367305639,
+      "duration": "30s",
+      "both_operations_exercised": true,
+      "peak_users_observed": 10,
+      "stable": true,
+      "exit_code": 0
+    },
+    {
+      "profile": "public_1users",
+      "target": "public",
+      "users": 1,
+      "requests": 8,
+      "failures": 0,
+      "error_percent": 0.0,
+      "average_ms": 568.9102691251264,
+      "p95_ms": 1500.0,
+      "rps": 0.5069586943218336,
+      "duration": "20s",
+      "both_operations_exercised": true,
+      "peak_users_observed": 1,
+      "stable": true,
+      "exit_code": 0
+    }
+  ]
+}

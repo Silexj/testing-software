@@ -1,0 +1,5 @@
+profile,target,users,requests,failures,error_percent,average_ms,p95_ms,rps,duration,both_operations_exercised,peak_users_observed,stable,exit_code
+bmc_1users,bmc,1,16,0,0.0,204.19801018749695,390.0,0.5395593940167053,30s,True,1,True,0
+bmc_5users,bmc,5,70,0,0.0,329.3841832571031,1400.0,2.343506472395829,30s,True,5,True,0
+bmc_10users,bmc,10,122,0,0.0,744.9540206967255,2000.0,4.00765367305639,30s,True,10,True,0
+public_1users,public,1,8,0,0.0,568.9102691251264,1500.0,0.5069586943218336,20s,True,1,True,0

@@ -51,7 +51,7 @@ pipeline {
                 sh '''#!/bin/bash
                     set -euo pipefail
                     mkdir -p "$REPORTS/api"
-                    if [ "$INJECT_API_FAILURE" = true ]; then
+                    if [ "${INJECT_API_FAILURE:-false}" = true ]; then
                         export BMC_PASSWORD='intentionally-invalid-for-ci-gate'
                     fi
                     python -m pytest lab7/tests/api/test_redfish.py -v \

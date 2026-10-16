@@ -23,6 +23,7 @@ HARDWARE_UNITS = [
     "vrm-control@0.service", "start_host@0.service", "cfam_override@0.service",
     "op-cfam-reset.service", "op-continue-mpreboot@0.service",
     "op-stop-instructions@0.service",
+    "mboxd-reload@0.service", "mapper-wait@-org-openbmc-mboxd.service",
 ]
 POWER_UNITS = {
     "obmc-power-start@0.service": "power On",
@@ -122,7 +123,10 @@ Restart=on-failure
     run(client, "systemctl reset-failed", check=False)
     run(client, "systemctl start " + " ".join(SERVICES))
     run(client, "systemctl restart phosphor-ipmi-host.service")
-    print("Installed QEMU hardware profile: 2 CPU inputs, PSU/FSI/VRM model, IPMI Celsius scale fix")
+    # On a first boot eth0 can appear after its socket dependency timed out.
+    # Start the real LAN+ socket after network readiness, never emulate IPMI.
+    run(client, "systemctl start phosphor-ipmi-net@eth0.socket")
+    print("Installed QEMU hardware profile: 2 CPU inputs, PSU/FSI/VRM/LPC mailbox model, native IPMI LAN+, Celsius scale fix")
 
 
 def main():

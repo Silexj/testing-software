@@ -1,0 +1,1 @@
+from test_redfish import pytest_addoption

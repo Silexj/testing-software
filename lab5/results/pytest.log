@@ -1,0 +1,136 @@
+============================= test session starts ==============================
+platform linux -- Python 3.14.8, pytest-9.1.1, pluggy-1.7.0 -- /home/silex/Documents/unic/testing/.venv-labs/bin/python
+cachedir: .pytest_cache
+rootdir: /home/silex/Documents/unic/testing/testing-software/lab5
+configfile: pytest.ini
+plugins: locust-2.46.7
+collecting ... collected 5 items
+
+test_redfish.py::test_authentication 
+-------------------------------- live log setup --------------------------------
+INFO POST /redfish/v1/SessionService/Sessions -> 201 (0.434 s)
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/SessionService/Sessions/pYLeYXKGuT -> 200 (0.026 s)
+PASSED                                                                   [ 20%]
+test_redfish.py::test_system_information 
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/Systems/system -> 200 (0.224 s)
+INFO System Status={'Health': 'OK', 'State': 'Disabled'} PowerState=Off
+PASSED                                                                   [ 40%]
+test_redfish.py::test_power_on 
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/Systems/system -> 200 (0.199 s)
+INFO POST /redfish/v1/Systems/system/Actions/ComputerSystem.Reset -> 204 (0.344 s)
+INFO ResetType=On accepted, HTTP 204; initial=Off
+INFO GET /redfish/v1/Systems/system -> 200 (7.565 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.397 s)
+INFO GET /redfish/v1/Systems/system -> 200 (4.459 s)
+INFO GET /redfish/v1/Systems/system -> 200 (2.085 s)
+INFO GET /redfish/v1/Systems/system -> 200 (1.724 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.338 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.510 s)
+INFO GET /redfish/v1/Systems/system -> 200 (2.432 s)
+INFO GET /redfish/v1/Systems/system -> 200 (6.595 s)
+INFO GET /redfish/v1/Systems/system -> 200 (2.745 s)
+INFO GET /redfish/v1/Systems/system -> 200 (2.117 s)
+INFO GET /redfish/v1/Systems/system -> 200 (2.889 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.371 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.193 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.708 s)
+INFO GET /redfish/v1/Systems/system -> 200 (7.263 s)
+INFO GET /redfish/v1/Systems/system -> 200 (2.333 s)
+INFO GET /redfish/v1/Systems/system -> 200 (1.017 s)
+INFO GET /redfish/v1/Systems/system -> 200 (1.309 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.388 s)
+INFO GET /redfish/v1/Systems/system -> 200 (1.632 s)
+INFO GET /redfish/v1/Systems/system -> 200 (1.753 s)
+INFO POST /redfish/v1/Systems/system/Actions/ComputerSystem.Reset -> 204 (6.691 s)
+INFO GET /redfish/v1/Systems/system -> 200 (6.057 s)
+FAILED                                                                   [ 60%]
+test_redfish.py::test_cpu_temperature 
+-------------------------------- live log setup --------------------------------
+INFO GET /redfish/v1/Chassis -> 200 (0.128 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.553 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.445 s)
+SKIPPED (QEMU Romulus exposes no CPU temperature sensors; physical s...) [ 80%]
+test_redfish.py::test_cpu_redfish_matches_ipmi SKIPPED (QEMU Romulus...) [100%]
+------------------------------ live log teardown -------------------------------
+INFO DELETE /redfish/v1/SessionService/Sessions/pYLeYXKGuT -> 200 (0.128 s)
+
+
+=================================== FAILURES ===================================
+________________________________ test_power_on _________________________________
+
+redfish = Redfish(http=<requests.sessions.Session object at 0x7f8d38d65e80>, base='https://127.0.0.1:2443', verify=False, timeout=30.0, login_status=201, location='/redfish/v1/SessionService/Sessions/pYLeYXKGuT')
+
+    def test_power_on(redfish):
+        """TC-API-03: On action, polling and restoration of initial power state."""
+        initial = redfish.get(SYSTEM)["PowerState"]
+        assert initial in {"On", "Off"}, f"Host is in transition: {initial}"
+        action = SYSTEM + "/Actions/ComputerSystem.Reset"
+        # 202 = asynchronous operation, 204 = synchronous completion allowed by Redfish.
+        try:
+            response = redfish.request("POST", action, expected=(202, 204), json={"ResetType": "On"})
+            LOG.info("ResetType=On accepted, HTTP %s; initial=%s", response.status_code, initial)
+>           wait_power(redfish, "On")
+
+test_redfish.py:127: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+client = Redfish(http=<requests.sessions.Session object at 0x7f8d38d65e80>, base='https://127.0.0.1:2443', verify=False, timeout=30.0, login_status=201, location='/redfish/v1/SessionService/Sessions/pYLeYXKGuT')
+state = 'On'
+
+    def wait_power(client, state):
+        deadline = time.monotonic() + float(os.getenv("BMC_POWER_TIMEOUT", "90"))
+        while True:
+            actual = client.get(SYSTEM).get("PowerState")
+            if actual == state:
+                return
+            if time.monotonic() >= deadline:
+>               pytest.fail(f"PowerState did not become {state}; last value={actual}")
+E               Failed: PowerState did not become On; last value=Off
+
+test_redfish.py:114: Failed
+------------------------------ Captured log call -------------------------------
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (0.199 s)
+INFO     test_redfish:test_redfish.py:46 POST /redfish/v1/Systems/system/Actions/ComputerSystem.Reset -> 204 (0.344 s)
+INFO     test_redfish:test_redfish.py:126 ResetType=On accepted, HTTP 204; initial=Off
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (7.565 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (0.397 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (4.459 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (2.085 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (1.724 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (0.338 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (0.510 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (2.432 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (6.595 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (2.745 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (2.117 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (2.889 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (0.371 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (0.193 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (0.708 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (7.263 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (2.333 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (1.017 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (1.309 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (0.388 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (1.632 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (1.753 s)
+INFO     test_redfish:test_redfish.py:46 POST /redfish/v1/Systems/system/Actions/ComputerSystem.Reset -> 204 (6.691 s)
+INFO     test_redfish:test_redfish.py:46 GET /redfish/v1/Systems/system -> 200 (6.057 s)
+=============================== warnings summary ===============================
+test_redfish.py::test_system_information
+test_redfish.py::test_power_on
+test_redfish.py::test_cpu_temperature
+test_redfish.py::test_cpu_redfish_matches_ipmi
+  /home/silex/Documents/unic/testing/.venv-labs/lib64/python3.14/site-packages/urllib3/connectionpool.py:1129: InsecureRequestWarning: Unverified HTTPS request is being made to host '127.0.0.1'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#tls-warnings
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /home/silex/Documents/unic/testing/testing-software/lab5/results/junit.xml -
+=========================== short test summary info ============================
+SKIPPED [1] test_redfish.py:158: QEMU Romulus exposes no CPU temperature sensors; physical sensor validation unavailable
+SKIPPED [1] test_redfish.py:180: QEMU Romulus exposes no CPU temperature sensors; physical sensor validation unavailable
+FAILED test_redfish.py::test_power_on - Failed: PowerState did not become On;...
+======== 1 failed, 2 passed, 2 skipped, 4 warnings in 108.12s (0:01:48) ========

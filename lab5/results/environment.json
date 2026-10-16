@@ -1,0 +1,206 @@
+{
+  "captured_at": "2026-10-16T13:30:12.577756+00:00",
+  "target": "OpenBMC Romulus QEMU",
+  "/redfish/v1/": {
+    "status": 200,
+    "body": {
+      "@odata.id": "/redfish/v1",
+      "@odata.type": "#ServiceRoot.v1_15_0.ServiceRoot",
+      "AccountService": {
+        "@odata.id": "/redfish/v1/AccountService"
+      },
+      "Cables": {
+        "@odata.id": "/redfish/v1/Cables"
+      },
+      "CertificateService": {
+        "@odata.id": "/redfish/v1/CertificateService"
+      },
+      "Chassis": {
+        "@odata.id": "/redfish/v1/Chassis"
+      },
+      "EventService": {
+        "@odata.id": "/redfish/v1/EventService"
+      },
+      "Id": "RootService",
+      "JsonSchemas": {
+        "@odata.id": "/redfish/v1/JsonSchemas"
+      },
+      "Links": {
+        "ManagerProvidingService": {
+          "@odata.id": "/redfish/v1/Managers/bmc"
+        },
+        "Sessions": {
+          "@odata.id": "/redfish/v1/SessionService/Sessions"
+        }
+      },
+      "Managers": {
+        "@odata.id": "/redfish/v1/Managers"
+      },
+      "Name": "Root Service",
+      "ProtocolFeaturesSupported": {
+        "DeepOperations": {
+          "DeepPATCH": false,
+          "DeepPOST": false
+        },
+        "ExcerptQuery": false,
+        "ExpandQuery": {
+          "ExpandAll": false,
+          "Levels": false,
+          "Links": false,
+          "NoLinks": false
+        },
+        "FilterQuery": false,
+        "OnlyMemberQuery": true,
+        "SelectQuery": true
+      },
+      "RedfishVersion": "1.17.0",
+      "Registries": {
+        "@odata.id": "/redfish/v1/Registries"
+      },
+      "SessionService": {
+        "@odata.id": "/redfish/v1/SessionService"
+      },
+      "Systems": {
+        "@odata.id": "/redfish/v1/Systems"
+      },
+      "Tasks": {
+        "@odata.id": "/redfish/v1/TaskService"
+      },
+      "TelemetryService": {
+        "@odata.id": "/redfish/v1/TelemetryService"
+      },
+      "UUID": "0bc7f26e-f14c-443e-a57a-55affad7a83a",
+      "UpdateService": {
+        "@odata.id": "/redfish/v1/UpdateService"
+      }
+    }
+  },
+  "/redfish/v1/Systems/system": {
+    "status": 200,
+    "body": {
+      "@odata.id": "/redfish/v1/Systems/system",
+      "@odata.type": "#ComputerSystem.v1_22_0.ComputerSystem",
+      "Actions": {
+        "#ComputerSystem.Reset": {
+          "@Redfish.ActionInfo": "/redfish/v1/Systems/system/ResetActionInfo",
+          "target": "/redfish/v1/Systems/system/Actions/ComputerSystem.Reset"
+        }
+      },
+      "Bios": {
+        "@odata.id": "/redfish/v1/Systems/system/Bios"
+      },
+      "Boot": {
+        "AutomaticRetryAttempts": 3,
+        "AutomaticRetryConfig": "RetryAttempts",
+        "AutomaticRetryConfig@Redfish.AllowableValues": [
+          "Disabled",
+          "RetryAttempts"
+        ],
+        "BootSourceOverrideEnabled": "Disabled",
+        "BootSourceOverrideMode": "UEFI",
+        "BootSourceOverrideMode@Redfish.AllowableValues": [
+          "Legacy",
+          "UEFI"
+        ],
+        "BootSourceOverrideTarget": "None",
+        "BootSourceOverrideTarget@Redfish.AllowableValues": [
+          "None",
+          "Pxe",
+          "Hdd",
+          "Cd",
+          "Diags",
+          "BiosSetup",
+          "Usb"
+        ],
+        "RemainingAutomaticRetryAttempts": 3,
+        "StopBootOnFault": "Never",
+        "TrustedModuleRequiredToBoot": "Disabled"
+      },
+      "BootProgress": {
+        "LastState": "None",
+        "LastStateTime": "1970-01-01T00:00:00.000000+00:00"
+      },
+      "Description": "Computer System",
+      "FabricAdapters": {
+        "@odata.id": "/redfish/v1/Systems/system/FabricAdapters"
+      },
+      "GraphicalConsole": {
+        "ConnectTypesSupported": [
+          "KVMIP"
+        ],
+        "MaxConcurrentSessions": 4,
+        "ServiceEnabled": true
+      },
+      "Id": "system",
+      "LastResetTime": "1970-01-01T00:00:00+00:00",
+      "Links": {
+        "Chassis": [
+          {
+            "@odata.id": "/redfish/v1/Chassis/chassis"
+          }
+        ],
+        "ManagedBy": [
+          {
+            "@odata.id": "/redfish/v1/Managers/bmc"
+          }
+        ]
+      },
+      "LogServices": {
+        "@odata.id": "/redfish/v1/Systems/system/LogServices"
+      },
+      "Memory": {
+        "@odata.id": "/redfish/v1/Systems/system/Memory"
+      },
+      "MemorySummary": {
+        "TotalSystemMemoryGiB": 0.0
+      },
+      "Name": "system",
+      "PCIeDevices": [],
+      "PCIeDevices@odata.count": 0,
+      "PowerRestorePolicy": "AlwaysOff",
+      "PowerState": "Off",
+      "ProcessorSummary": {
+        "Count": 0
+      },
+      "Processors": {
+        "@odata.id": "/redfish/v1/Systems/system/Processors"
+      },
+      "SerialConsole": {
+        "IPMI": {
+          "ServiceEnabled": true
+        },
+        "MaxConcurrentSessions": 15,
+        "SSH": {
+          "HotKeySequenceDisplay": "Press ~. to exit console",
+          "Port": 2200,
+          "ServiceEnabled": true
+        }
+      },
+      "Status": {
+        "Health": "OK",
+        "State": "Disabled"
+      },
+      "Storage": {
+        "@odata.id": "/redfish/v1/Systems/system/Storage"
+      },
+      "SystemType": "Physical"
+    }
+  },
+  "/redfish/v1/Chassis/chassis/Thermal": {
+    "status": 200,
+    "body": {
+      "@odata.id": "/redfish/v1/Chassis/chassis/Thermal",
+      "@odata.type": "#Thermal.v1_4_0.Thermal",
+      "Fans": [],
+      "Id": "Thermal",
+      "Name": "Thermal",
+      "Redundancy": [],
+      "Temperatures": []
+    }
+  },
+  "ipmi": {
+    "returncode": 0,
+    "stdout": "BootProgress,0x0,discrete,0x0000,na,na,na,na,na,na\nocc0,na,discrete,na,na,na,na,na,na,na\nocc1,na,discrete,na,na,na,na,na,na,na\ncpu0,na,discrete,na,na,na,na,na,na,na\ncpu1,na,discrete,na,na,na,na,na,na,na\ndimm0,na,discrete,na,na,na,na,na,na,na\ndimm1,na,discrete,na,na,na,na,na,na,na\ndimm2,na,discrete,na,na,na,na,na,na,na\ndimm3,na,discrete,na,na,na,na,na,na,na\ndimm4,na,discrete,na,na,na,na,na,na,na\ndimm5,na,discrete,na,na,na,na,na,na,na\ndimm6,na,discrete,na,na,na,na,na,na,na\ndimm7,na,discrete,na,na,na,na,na,na,na\ndimm8,na,discrete,na,na,na,na,na,na,na\ndimm9,na,discrete,na,na,na,na,na,na,na\ndimm10,na,discrete,na,na,na,na,na,na,na\ndimm11,na,discrete,na,na,na,na,na,na,na\ndimm12,na,discrete,na,na,na,na,na,na,na\ndimm13,na,discrete,na,na,na,na,na,na,na\ndimm14,na,discrete,na,na,na,na,na,na,na\ndimm15,na,discrete,na,na,na,na,na,na,na\ndimm0_temp,na,,na,na,na,na,na,na,na\ndimm1_temp,na,,na,na,na,na,na,na,na\ndimm2_temp,na,,na,na,na,na,na,na,na\ndimm3_temp,na,,na,na,na,na,na,na,na\ndimm4_temp,na,,na,na,na,na,na,na,na\ndimm5_temp,na,,na,na,na,na,na,na,na\ndimm6_temp,na,,na,na,na,na,na,na,na\ndimm7_temp,na,,na,na,na,na,na,na,na\ndimm8_temp,na,,na,na,na,na,na,na,na\ndimm9_temp,na,,na,na,na,na,na,na,na\ndimm10_temp,na,,na,na,na,na,na,na,na\ndimm11_temp,na,,na,na,na,na,na,na,na\ndimm12_temp,na,,na,na,na,na,na,na,na\ndimm13_temp,na,,na,na,na,na,na,na,na\ndimm14_temp,na,,na,na,na,na,na,na,na\ndimm15_temp,na,,na,na,na,na,na,na,na\ncpu0_core0,na,discrete,na,na,na,na,na,na,na\ncpu0_core1,na,discrete,na,na,na,na,na,na,na\ncpu0_core2,na,discrete,na,na,na,na,na,na,na\ncpu0_core3,na,discrete,na,na,na,na,na,na,na\ncpu0_core4,na,discrete,na,na,na,na,na,na,na\ncpu0_core5,na,discrete,na,na,na,na,na,na,na\ncpu0_core6,na,discrete,na,na,na,na,na,na,na\ncpu0_core7,na,discrete,na,na,na,na,na,na,na\ncpu0_core8,na,discrete,na,na,na,na,na,na,na\ncpu0_core9,na,discrete,na,na,na,na,na,na,na\ncpu0_core10,na,discrete,na,na,na,na,na,na,na\ncpu0_core11,na,discrete,na,na,na,na,na,na,na\ncpu0_core12,na,discrete,na,na,na,na,na,na,na\ncpu0_core13,na,discrete,na,na,na,na,na,na,na\ncpu0_core14,na,discrete,na,na,na,na,na,na,na\ncpu0_core15,na,discrete,na,na,na,na,na,na,na\ncpu0_core16,na,discrete,na,na,na,na,na,na,na\ncpu0_core17,na,discrete,na,na,na,na,na,na,na\ncpu0_core18,na,discrete,na,na,na,na,na,na,na\ncpu0_core19,na,discrete,na,na,na,na,na,na,na\ncpu0_core20,na,discrete,na,na,na,na,na,na,na\ncpu0_core21,na,discrete,na,na,na,na,na,na,na\ncpu0_core22,na,discrete,na,na,na,na,na,na,na\ncpu0_core23,na,discrete,na,na,na,na,na,na,na\ncpu1_core0,na,discrete,na,na,na,na,na,na,na\ncpu1_core1,na,discrete,na,na,na,na,na,na,na\ncpu1_core2,na,discrete,na,na,na,na,na,na,na\ncpu1_core3,na,discrete,na,na,na,na,na,na,na\ncpu1_core4,na,discrete,na,na,na,na,na,na,na\ncpu1_core5,na,discrete,na,na,na,na,na,na,na\ncpu1_core6,na,discrete,na,na,na,na,na,na,na\ncpu1_core7,na,discrete,na,na,na,na,na,na,na\ncpu1_core8,na,discrete,na,na,na,na,na,na,na\ncpu1_core9,na,discrete,na,na,na,na,na,na,na\ncpu1_core10,na,discrete,na,na,na,na,na,na,na\ncpu1_core11,na,discrete,na,na,na,na,na,na,na\ncpu1_core12,na,discrete,na,na,na,na,na,na,na\ncpu1_core13,na,discrete,na,na,na,na,na,na,na\ncpu1_core14,na,discrete,na,na,na,na,na,na,na\ncpu1_core15,na,discrete,na,na,na,na,na,na,na\ncpu1_core16,na,discrete,na,na,na,na,na,na,na\ncpu1_core17,na,discrete,na,na,na,na,na,na,na\ncpu1_core18,na,discrete,na,na,na,na,na,na,na\ncpu1_core19,na,discrete,na,na,na,na,na,na,na\ncpu1_core20,na,discrete,na,na,na,na,na,na,na\ncpu1_core21,na,discrete,na,na,na,na,na,na,na\ncpu1_core22,na,discrete,na,na,na,na,na,na,na\ncpu1_core23,na,discrete,na,na,na,na,na,na,na\np0_core0_temp,na,,na,na,na,na,na,na,na\np0_core1_temp,na,,na,na,na,na,na,na,na\np0_core2_temp,na,,na,na,na,na,na,na,na\np0_core3_temp,na,,na,na,na,na,na,na,na\np0_core4_temp,na,,na,na,na,na,na,na,na\np0_core5_temp,na,,na,na,na,na,na,na,na\np0_core6_temp,na,,na,na,na,na,na,na,na\np0_core7_temp,na,,na,na,na,na,na,na,na\np0_core8_temp,na,,na,na,na,na,na,na,na\np0_core9_temp,na,,na,na,na,na,na,na,na\np0_core10_temp,na,,na,na,na,na,na,na,na\np0_core11_temp,na,,na,na,na,na,na,na,na\np0_core12_temp,na,,na,na,na,na,na,na,na\np0_core13_temp,na,,na,na,na,na,na,na,na\np0_core14_temp,na,,na,na,na,na,na,na,na\np0_core15_temp,na,,na,na,na,na,na,na,na\np0_core16_temp,na,,na,na,na,na,na,na,na\np0_core17_temp,na,,na,na,na,na,na,na,na\np0_core18_temp,na,,na,na,na,na,na,na,na\np0_core19_temp,na,,na,na,na,na,na,na,na\np0_core20_temp,na,,na,na,na,na,na,na,na\np0_core21_temp,na,,na,na,na,na,na,na,na\np0_core22_temp,na,,na,na,na,na,na,na,na\np0_core23_temp,na,,na,na,na,na,na,na,na\np1_core0_temp,na,,na,na,na,na,na,na,na\np1_core1_temp,na,,na,na,na,na,na,na,na\np1_core2_temp,na,,na,na,na,na,na,na,na\np1_core3_temp,na,,na,na,na,na,na,na,na\np1_core4_temp,na,,na,na,na,na,na,na,na\np1_core5_temp,na,,na,na,na,na,na,na,na\np1_core6_temp,na,,na,na,na,na,na,na,na\np1_core7_temp,na,,na,na,na,na,na,na,na\np1_core8_temp,na,,na,na,na,na,na,na,na\np1_core9_temp,na,,na,na,na,na,na,na,na\np1_core10_temp,na,,na,na,na,na,na,na,na\np1_core11_temp,na,,na,na,na,na,na,na,na\np1_core12_temp,na,,na,na,na,na,na,na,na\np1_core13_temp,na,,na,na,na,na,na,na,na\np1_core14_temp,na,,na,na,na,na,na,na,na\np1_core15_temp,na,,na,na,na,na,na,na,na\np1_core16_temp,na,,na,na,na,na,na,na,na\np1_core17_temp,na,,na,na,na,na,na,na,na\np1_core18_temp,na,,na,na,na,na,na,na,na\np1_core19_temp,na,,na,na,na,na,na,na,na\np1_core20_temp,na,,na,na,na,na,na,na,na\np1_core21_temp,na,,na,na,na,na,na,na,na\np1_core22_temp,na,,na,na,na,na,na,na,na\np1_core23_temp,na,,na,na,na,na,na,na,na\nAttemptsLeft,0x0,discrete,0x0300,na,na,na,na,na,na\nOperatingSystemS,0x0,discrete,0x0000,na,na,na,na,na,na\n",
+    "stderr": ""
+  }
+}

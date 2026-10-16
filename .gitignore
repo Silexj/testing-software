@@ -9,3 +9,5 @@ __pycache__/
 !lab*/results/*.log
 reports/qa/
 lab7/artifacts/
+lab7/results/build-*/
+!lab7/results/**/*.log

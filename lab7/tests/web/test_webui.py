@@ -1,8 +1,12 @@
 """Selenium CI checks adapted from lab 4: actual page content, not URL alone."""
 import os
+import json
+from pathlib import Path
+from urllib.parse import urlsplit
 import re
 
 import pytest
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -15,7 +19,7 @@ SUBMIT = (By.CSS_SELECTOR, "button[type='submit'], button[data-test-id='login-bu
 
 def sign_in(browser, username, password):
     browser.get(BASE + '/#/login')
-    wait = WebDriverWait(browser, 45)
+    wait = WebDriverWait(browser, 45, ignored_exceptions=(StaleElementReferenceException,))
     wait.until(EC.visibility_of_element_located(USER)).send_keys(username)
     browser.find_element(*PASSWORD).send_keys(password)
     wait.until(EC.element_to_be_clickable(SUBMIT)).click()
@@ -36,15 +40,36 @@ def test_valid_login(logged_in):
 
 
 def test_invalid_login(browser):
-    wait = sign_in(browser, 'lab7_nonexistent_user', 'deliberately-invalid')
-    def visible_error(driver):
-        return next((element for element in driver.find_elements(By.CSS_SELECTOR,
-                     '.alert-danger, .invalid-feedback, [role="alert"]')
-                     if element.is_displayed() and element.text.strip()), False)
-    alert = wait.until(visible_error)
-    assert alert.text.strip(), 'No error message for the rejected login'
+    # The Vue authentication interceptor reloads the page on HTTP 401. Assert
+    # the real rejected login response instead of retaining an obsolete alert.
+    wait = sign_in(browser, 'invalid_ci', 'deliberately-invalid')
+    rejected = {}
+    def rejected_login(driver):
+        for entry in driver.get_log('performance'):
+            event = json.loads(entry['message'])['message']
+            if event['method'] == 'Network.responseReceived':
+                response = event['params']['response']
+                path = urlsplit(response['url']).path
+                if path in ['/login', '/redfish/v1/SessionService/Sessions']:
+                    status = int(response['status'])
+                    if status in [401, 403]:
+                        rejected.update(login_path=path, login_status=status)
+        return bool(rejected)
+    wait.until(rejected_login)
+    wait.until(EC.visibility_of_element_located(USER))
     assert 'login' in browser.current_url
-    assert browser.find_element(*USER).is_displayed()
+    # A retained login form alone would not prove that access is denied.
+    status = browser.execute_async_script("""
+        const done = arguments[arguments.length - 1];
+        fetch('/redfish/v1/Systems/system', {credentials: 'same-origin'})
+          .then(response => done(response.status)).catch(() => done(0));
+    """)
+    assert status in [401, 403], f'Unauthenticated protected resource returned {status}'
+    rejected['protected_resource_status'] = status
+    destination = Path(os.getenv('REPORTS', 'lab7/artifacts')) / 'web'
+    destination.mkdir(parents=True, exist_ok=True)
+    # Raw performance logs can contain login request data and are never saved.
+    (destination / 'rejected-login.json').write_text(json.dumps(rejected, indent=2) + '\n')
 
 
 def test_power_controls(logged_in):
@@ -65,5 +90,7 @@ def test_cpu_sensors(logged_in):
     wait.until(both_cpus)
     rows = logged_in.find_elements(By.CSS_SELECTOR, 'tbody tr')
     assert len(rows) >= 2, 'CPU sensor rows are missing'
-    visible_rows = ' '.join(row.text for row in rows)
-    assert re.search(r'\b42(?:\.0)?\b', visible_rows) and re.search(r'\b44(?:\.0)?\b', visible_rows)
+    for name, value in [('p0core0temp', 42), ('p1core0temp', 44)]:
+        matches = [row.text for row in rows if name in re.sub(r'[^a-z0-9]', '', row.text.lower())]
+        assert len(matches) == 1, f'Missing or ambiguous CPU row: {name}'
+        assert re.search(rf'(?<![\d.]){value}(?:\.0+)?(?![\d.])', matches[0]), matches[0]

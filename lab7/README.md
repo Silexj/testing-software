@@ -79,7 +79,8 @@ Selenium использует Chromium headless и соответствующи�
 ## Демонстрация преподавателю
 
 1. Открыть GitHub и корневой Jenkinsfile: показать этапы и секции `post`.
-2. В Jenkins открыть `openbmc-lab7` и нажать Build with Parameters.
+2. В Jenkins открыть `openbmc-lab7`: первая сборка запускается через Build Now,
+   после неё параметры доступны через Build with Parameters.
 3. Оставить `INJECT_API_FAILURE` выключенным и запустить сборку.
 4. В Console Output проследить запуск OpenBMC и тестов; дождаться SUCCESS.
 5. Открыть Tests, Build Artifacts, JUnit, снимки браузера и HTML/CSV Locust.
@@ -103,3 +104,18 @@ Selenium использует Chromium headless и соответствующи�
 - [Jenkinsfile и публикация результатов](https://www.jenkins.io/doc/book/pipeline/jenkinsfile/)
 - [JUnit и артефакты](https://www.jenkins.io/doc/pipeline/tour/tests-and-artifacts/)
 - [Init Groovy scripts](https://www.jenkins.io/doc/book/managing/groovy-hook-scripts/)
+
+## Запуск и выгрузка через API Jenkins
+
+На подготовленном компьютере с Requests в активном Python-окружении:
+
+```bash
+python lab7/scripts/jenkins_run.py
+python lab7/scripts/jenkins_run.py --inject-api-failure
+python lab7/scripts/jenkins_run.py --collect 1
+```
+
+Скрипт читает локальный admin-password, использует CSRF crumb и сохраняет
+реальные артефакты в `lab7/results/build-N`. Контрольный отказ остаётся FAILURE
+в Jenkins; скрипт только проверяет, что это ожидаемый результат. Для обычной
+сборки требуется SUCCESS.

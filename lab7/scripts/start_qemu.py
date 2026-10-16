@@ -4,6 +4,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import socket
 import subprocess
 import time
 import warnings
@@ -47,11 +48,13 @@ def main():
                                             auth=(os.environ['BMC_USERNAME'], os.environ['BMC_PASSWORD']),
                                             verify=False, timeout=10)
                 if response.status_code == 200 and response.json().get('PowerState') == 'Off':
+                    with socket.create_connection(('127.0.0.1', 2222), timeout=2):
+                        pass
                     metadata.update(ready=True, initial_power_state='Off',
                                     boot_seconds=round(time.monotonic() - started, 2))
                     print('OpenBMC is ready; initial PowerState=Off', flush=True)
                     return
-            except (requests.RequestException, ValueError):
+            except (requests.RequestException, ValueError, OSError):
                 pass
             time.sleep(3)
         raise RuntimeError('OpenBMC did not become ready in 480 seconds')

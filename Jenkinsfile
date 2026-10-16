@@ -6,6 +6,7 @@ pipeline {
         timeout(time: 20, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: '10'))
     }
+    triggers { pollSCM('H/5 * * * *') }
     parameters {
         booleanParam(name: 'INJECT_API_FAILURE', defaultValue: false,
                      description: 'Demonstrate a failed API gate using an invalid password')

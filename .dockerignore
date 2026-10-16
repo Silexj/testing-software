@@ -1,0 +1,8 @@
+.git
+.runtime
+**/__pycache__
+**/.pytest_cache
+**/.venv*
+**/results
+*.mtd
+*.qcow2

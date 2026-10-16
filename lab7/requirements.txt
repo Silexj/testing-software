@@ -1,0 +1,5 @@
+pytest==9.1.1
+requests==2.34.2
+paramiko==5.0.0
+locust==2.46.7
+selenium==4.51.0

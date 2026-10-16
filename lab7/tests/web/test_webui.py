@@ -37,8 +37,11 @@ def test_valid_login(logged_in):
 
 def test_invalid_login(browser):
     wait = sign_in(browser, 'lab7_nonexistent_user', 'deliberately-invalid')
-    alert = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR,
-                       '.alert-danger, .invalid-feedback, [role="alert"]')))
+    def visible_error(driver):
+        return next((element for element in driver.find_elements(By.CSS_SELECTOR,
+                     '.alert-danger, .invalid-feedback, [role="alert"]')
+                     if element.is_displayed() and element.text.strip()), False)
+    alert = wait.until(visible_error)
     assert alert.text.strip(), 'No error message for the rejected login'
     assert 'login' in browser.current_url
     assert browser.find_element(*USER).is_displayed()

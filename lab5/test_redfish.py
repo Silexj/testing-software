@@ -1,4 +1,4 @@
-"""Integration tests against a real OpenBMC Redfish/IPMI endpoint (no mocks)."""
+"""Integration tests against OpenBMC Redfish/IPMI (physical or emulated hardware)."""
 import csv
 import json
 import logging
@@ -7,6 +7,7 @@ import os
 import re
 import subprocess
 import time
+import warnings
 from dataclasses import dataclass
 from urllib.parse import urlsplit
 
@@ -16,12 +17,6 @@ import urllib3
 
 LOG = logging.getLogger(__name__)
 SYSTEM = os.getenv("BMC_SYSTEM_PATH", "/redfish/v1/Systems/system")
-
-
-def pytest_addoption(parser):
-    # This file is loaded as a plugin by conftest.py.
-    parser.addoption("--allow-missing-sensors", action="store_true",
-                     help="Skip sensor tests only when the QEMU image exposes no CPU sensors")
 
 
 @dataclass
@@ -39,8 +34,11 @@ class Redfish:
         assert not parsed.scheme and not parsed.netloc and path.startswith("/redfish/"), path
         started = time.monotonic()
         try:
-            response = self.http.request(method, self.base + path, timeout=self.timeout,
-                                         verify=self.verify, allow_redirects=False, **kwargs)
+            with warnings.catch_warnings():
+                if self.verify is False:
+                    warnings.simplefilter("ignore", urllib3.exceptions.InsecureRequestWarning)
+                response = self.http.request(method, self.base + path, timeout=self.timeout,
+                                             verify=self.verify, allow_redirects=False, **kwargs)
         except requests.RequestException as exc:
             pytest.fail(f"{method} {path}: {type(exc).__name__}")
         LOG.info("%s %s -> %s (%.3f s)", method, path, response.status_code,
@@ -65,8 +63,6 @@ def redfish():
     if not password:
         pytest.fail("Set BMC_PASSWORD before running integration tests")
     verify = os.getenv("BMC_CA_BUNDLE") or os.getenv("BMC_VERIFY_TLS", "true").lower() != "false"
-    if verify is False:
-        urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
     with requests.Session() as http:
         client = Redfish(http, os.getenv("BMC_URL", "https://127.0.0.1:2443").rstrip("/"),
                          verify, float(os.getenv("BMC_TIMEOUT", "30")))
@@ -122,21 +118,26 @@ def test_power_on(redfish):
     action = SYSTEM + "/Actions/ComputerSystem.Reset"
     # 202 = asynchronous operation, 204 = synchronous completion allowed by Redfish.
     try:
+        if initial == "On":
+            redfish.request("POST", action, expected=(202, 204), json={"ResetType": "ForceOff"})
+            wait_power(redfish, "Off")
+        LOG.info("Power-on transition starts from confirmed Off")
         response = redfish.request("POST", action, expected=(202, 204), json={"ResetType": "On"})
         LOG.info("ResetType=On accepted, HTTP %s; initial=%s", response.status_code, initial)
         wait_power(redfish, "On")
+        LOG.info("PowerState=On confirmed by a fresh GET")
     finally:
-        if initial == "Off":
-            redfish.request("POST", action, expected=(202, 204), json={"ResetType": "ForceOff"})
-            wait_power(redfish, "Off")
+        restore = "On" if initial == "On" else "ForceOff"
+        redfish.request("POST", action, expected=(202, 204), json={"ResetType": restore})
+        wait_power(redfish, initial)
+        LOG.info("Original PowerState=%s restored", initial)
 
 
 def numeric(value):
     return isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value)
 
 
-@pytest.fixture(scope="session")
-def cpu_sensors(redfish, request):
+def read_cpu_sensors(redfish):
     sensors = []
     chassis = redfish.get("/redfish/v1/Chassis")
     for member in chassis.get("Members", []):
@@ -146,13 +147,18 @@ def cpu_sensors(redfish, request):
             continue
         for sensor in redfish.get(thermal).get("Temperatures", []):
             name = sensor.get("Name", "")
-            if sensor.get("PhysicalContext") == "CPU" or re.search(r"cpu|processor", name, re.I):
-                sensors.append(sensor)
-    # Empty data is never interpreted as a successful test.
-    if not sensors and request.config.getoption("--allow-missing-sensors"):
-        pytest.skip("QEMU Romulus exposes no CPU temperature sensors; physical sensor validation unavailable")
+            # OpenPOWER OCC convention: p0_core0_temp, p1_core0_temp, etc.
+            if sensor.get("PhysicalContext") == "CPU" or re.search(
+                    r"cpu|processor|\bp\d+[_ ]core\d+", name, re.I):
+                sensors.append({**sensor, "_ThermalPath": thermal})
     assert sensors, "No CPU sensors found in Chassis/*/Thermal"
     return sensors
+
+
+@pytest.fixture(scope="session")
+def cpu_sensors(redfish):
+    # An absent sensor is an error; a full run never silently skips CPU coverage.
+    return read_cpu_sensors(redfish)
 
 
 def test_cpu_temperature(cpu_sensors):
@@ -185,7 +191,7 @@ def test_cpu_redfish_matches_ipmi(redfish, cpu_sensors):
                "-p", os.getenv("IPMI_PORT", "2623"), "-U", os.getenv("IPMI_USERNAME", "root"),
                "-E", "-c", "sensor", "list"]
     # Bracket the IPMI sample with two Redfish samples to account for temperature drift.
-    before = {s["MemberId"]: s for s in cpu_sensors}
+    before = {(s["_ThermalPath"], s["MemberId"]): s for s in read_cpu_sensors(redfish)}
     try:
         result = subprocess.run(command, env=env, capture_output=True, text=True,
                                 timeout=60, check=False)
@@ -197,15 +203,9 @@ def test_cpu_redfish_matches_ipmi(redfish, cpu_sensors):
     tolerance = float(os.getenv("CPU_TOLERANCE_C", "2"))
     assert math.isfinite(tolerance) and tolerance >= 0
     normalize = lambda name: re.sub(r"[^a-z0-9]", "", name.lower())
-    # Refresh the fixture's reads for temporal comparison.
-    after = {}
-    for member in redfish.get("/redfish/v1/Chassis")["Members"]:
-        thermal = redfish.get(member["@odata.id"]).get("Thermal", {}).get("@odata.id")
-        if thermal:
-            for sensor in redfish.get(thermal).get("Temperatures", []):
-                after[sensor["MemberId"]] = sensor
+    after = {(s["_ThermalPath"], s["MemberId"]): s for s in read_cpu_sensors(redfish)}
     for key, sensor in before.items():
-        expected_name = mapping.get(key, sensor["Name"])
+        expected_name = mapping.get(sensor["MemberId"], sensor["Name"])
         matched = [row for row in rows if len(row) >= 4 and normalize(row[0]) == normalize(expected_name)]
         assert len(matched) == 1, f"{sensor['Name']}: IPMI match is missing or ambiguous; set CPU_SENSOR_MAP"
         row = matched[0]

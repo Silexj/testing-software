@@ -1,6 +1,17 @@
 {
-  "captured_at": "2026-10-16T13:30:12.577756+00:00",
+  "captured_at": "2026-10-16T15:22:49.977577+00:00",
   "target": "OpenBMC Romulus QEMU",
+  "hardware_profile": {
+    "name": "lab5-qemu-hardware",
+    "power": "emulated PSU/FSI/VRM hardware operations; stock state-manager",
+    "temperature": "controlled hwmon inputs, not physical CPU measurements",
+    "cpu_inputs_celsius": [
+      42,
+      44
+    ],
+    "ipmi_compatibility": "static sensor IDs 0x5b/0x73 scale corrected from -3 to 0",
+    "firmware_os_release": "ID=openbmc-openpower\nNAME=\"Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro)\"\nVERSION=\"3.0.0-dev\"\nVERSION_ID=3.0.0-dev-734-gf330cd08ac\nVERSION_CODENAME=\"styhead\"\nPRETTY_NAME=\"Phosphor OpenBMC (Phosphor OpenBMC Project Reference Distro) 3.0.0-dev\"\nCPE_NAME=\"cpe:/o:openembedded:openbmc-openpower:3.0.0-dev-734-gf330cd08ac\"\nBUILD_ID=\"20250902012112\"\nOPENBMC_TARGET_MACHINE=\"romulus\"\nEXTENDED_VERSION=\"3.0.0-dev-734-gf330cd08ac\"\n"
+  },
   "/redfish/v1/": {
     "status": 200,
     "body": {
@@ -132,7 +143,7 @@
         "ServiceEnabled": true
       },
       "Id": "system",
-      "LastResetTime": "1970-01-01T00:00:00+00:00",
+      "LastResetTime": "2026-10-16T15:20:51+00:00",
       "Links": {
         "Chassis": [
           {
@@ -195,12 +206,43 @@
       "Id": "Thermal",
       "Name": "Thermal",
       "Redundancy": [],
-      "Temperatures": []
+      "Temperatures": [
+        {
+          "@odata.id": "/redfish/v1/Chassis/chassis/Thermal#/Temperatures/0",
+          "@odata.type": "#Thermal.v1_3_0.Temperature",
+          "LowerThresholdCritical": 0.0,
+          "LowerThresholdNonCritical": 5.0,
+          "MemberId": "0",
+          "Name": "p0 core0 temp",
+          "ReadingCelsius": 42.0,
+          "Status": {
+            "Health": "OK",
+            "State": "Enabled"
+          },
+          "UpperThresholdCritical": 90.0,
+          "UpperThresholdNonCritical": 80.0
+        },
+        {
+          "@odata.id": "/redfish/v1/Chassis/chassis/Thermal#/Temperatures/1",
+          "@odata.type": "#Thermal.v1_3_0.Temperature",
+          "LowerThresholdCritical": 0.0,
+          "LowerThresholdNonCritical": 5.0,
+          "MemberId": "1",
+          "Name": "p1 core0 temp",
+          "ReadingCelsius": 44.0,
+          "Status": {
+            "Health": "OK",
+            "State": "Enabled"
+          },
+          "UpperThresholdCritical": 90.0,
+          "UpperThresholdNonCritical": 80.0
+        }
+      ]
     }
   },
   "ipmi": {
     "returncode": 0,
-    "stdout": "BootProgress,0x0,discrete,0x0000,na,na,na,na,na,na\nocc0,na,discrete,na,na,na,na,na,na,na\nocc1,na,discrete,na,na,na,na,na,na,na\ncpu0,na,discrete,na,na,na,na,na,na,na\ncpu1,na,discrete,na,na,na,na,na,na,na\ndimm0,na,discrete,na,na,na,na,na,na,na\ndimm1,na,discrete,na,na,na,na,na,na,na\ndimm2,na,discrete,na,na,na,na,na,na,na\ndimm3,na,discrete,na,na,na,na,na,na,na\ndimm4,na,discrete,na,na,na,na,na,na,na\ndimm5,na,discrete,na,na,na,na,na,na,na\ndimm6,na,discrete,na,na,na,na,na,na,na\ndimm7,na,discrete,na,na,na,na,na,na,na\ndimm8,na,discrete,na,na,na,na,na,na,na\ndimm9,na,discrete,na,na,na,na,na,na,na\ndimm10,na,discrete,na,na,na,na,na,na,na\ndimm11,na,discrete,na,na,na,na,na,na,na\ndimm12,na,discrete,na,na,na,na,na,na,na\ndimm13,na,discrete,na,na,na,na,na,na,na\ndimm14,na,discrete,na,na,na,na,na,na,na\ndimm15,na,discrete,na,na,na,na,na,na,na\ndimm0_temp,na,,na,na,na,na,na,na,na\ndimm1_temp,na,,na,na,na,na,na,na,na\ndimm2_temp,na,,na,na,na,na,na,na,na\ndimm3_temp,na,,na,na,na,na,na,na,na\ndimm4_temp,na,,na,na,na,na,na,na,na\ndimm5_temp,na,,na,na,na,na,na,na,na\ndimm6_temp,na,,na,na,na,na,na,na,na\ndimm7_temp,na,,na,na,na,na,na,na,na\ndimm8_temp,na,,na,na,na,na,na,na,na\ndimm9_temp,na,,na,na,na,na,na,na,na\ndimm10_temp,na,,na,na,na,na,na,na,na\ndimm11_temp,na,,na,na,na,na,na,na,na\ndimm12_temp,na,,na,na,na,na,na,na,na\ndimm13_temp,na,,na,na,na,na,na,na,na\ndimm14_temp,na,,na,na,na,na,na,na,na\ndimm15_temp,na,,na,na,na,na,na,na,na\ncpu0_core0,na,discrete,na,na,na,na,na,na,na\ncpu0_core1,na,discrete,na,na,na,na,na,na,na\ncpu0_core2,na,discrete,na,na,na,na,na,na,na\ncpu0_core3,na,discrete,na,na,na,na,na,na,na\ncpu0_core4,na,discrete,na,na,na,na,na,na,na\ncpu0_core5,na,discrete,na,na,na,na,na,na,na\ncpu0_core6,na,discrete,na,na,na,na,na,na,na\ncpu0_core7,na,discrete,na,na,na,na,na,na,na\ncpu0_core8,na,discrete,na,na,na,na,na,na,na\ncpu0_core9,na,discrete,na,na,na,na,na,na,na\ncpu0_core10,na,discrete,na,na,na,na,na,na,na\ncpu0_core11,na,discrete,na,na,na,na,na,na,na\ncpu0_core12,na,discrete,na,na,na,na,na,na,na\ncpu0_core13,na,discrete,na,na,na,na,na,na,na\ncpu0_core14,na,discrete,na,na,na,na,na,na,na\ncpu0_core15,na,discrete,na,na,na,na,na,na,na\ncpu0_core16,na,discrete,na,na,na,na,na,na,na\ncpu0_core17,na,discrete,na,na,na,na,na,na,na\ncpu0_core18,na,discrete,na,na,na,na,na,na,na\ncpu0_core19,na,discrete,na,na,na,na,na,na,na\ncpu0_core20,na,discrete,na,na,na,na,na,na,na\ncpu0_core21,na,discrete,na,na,na,na,na,na,na\ncpu0_core22,na,discrete,na,na,na,na,na,na,na\ncpu0_core23,na,discrete,na,na,na,na,na,na,na\ncpu1_core0,na,discrete,na,na,na,na,na,na,na\ncpu1_core1,na,discrete,na,na,na,na,na,na,na\ncpu1_core2,na,discrete,na,na,na,na,na,na,na\ncpu1_core3,na,discrete,na,na,na,na,na,na,na\ncpu1_core4,na,discrete,na,na,na,na,na,na,na\ncpu1_core5,na,discrete,na,na,na,na,na,na,na\ncpu1_core6,na,discrete,na,na,na,na,na,na,na\ncpu1_core7,na,discrete,na,na,na,na,na,na,na\ncpu1_core8,na,discrete,na,na,na,na,na,na,na\ncpu1_core9,na,discrete,na,na,na,na,na,na,na\ncpu1_core10,na,discrete,na,na,na,na,na,na,na\ncpu1_core11,na,discrete,na,na,na,na,na,na,na\ncpu1_core12,na,discrete,na,na,na,na,na,na,na\ncpu1_core13,na,discrete,na,na,na,na,na,na,na\ncpu1_core14,na,discrete,na,na,na,na,na,na,na\ncpu1_core15,na,discrete,na,na,na,na,na,na,na\ncpu1_core16,na,discrete,na,na,na,na,na,na,na\ncpu1_core17,na,discrete,na,na,na,na,na,na,na\ncpu1_core18,na,discrete,na,na,na,na,na,na,na\ncpu1_core19,na,discrete,na,na,na,na,na,na,na\ncpu1_core20,na,discrete,na,na,na,na,na,na,na\ncpu1_core21,na,discrete,na,na,na,na,na,na,na\ncpu1_core22,na,discrete,na,na,na,na,na,na,na\ncpu1_core23,na,discrete,na,na,na,na,na,na,na\np0_core0_temp,na,,na,na,na,na,na,na,na\np0_core1_temp,na,,na,na,na,na,na,na,na\np0_core2_temp,na,,na,na,na,na,na,na,na\np0_core3_temp,na,,na,na,na,na,na,na,na\np0_core4_temp,na,,na,na,na,na,na,na,na\np0_core5_temp,na,,na,na,na,na,na,na,na\np0_core6_temp,na,,na,na,na,na,na,na,na\np0_core7_temp,na,,na,na,na,na,na,na,na\np0_core8_temp,na,,na,na,na,na,na,na,na\np0_core9_temp,na,,na,na,na,na,na,na,na\np0_core10_temp,na,,na,na,na,na,na,na,na\np0_core11_temp,na,,na,na,na,na,na,na,na\np0_core12_temp,na,,na,na,na,na,na,na,na\np0_core13_temp,na,,na,na,na,na,na,na,na\np0_core14_temp,na,,na,na,na,na,na,na,na\np0_core15_temp,na,,na,na,na,na,na,na,na\np0_core16_temp,na,,na,na,na,na,na,na,na\np0_core17_temp,na,,na,na,na,na,na,na,na\np0_core18_temp,na,,na,na,na,na,na,na,na\np0_core19_temp,na,,na,na,na,na,na,na,na\np0_core20_temp,na,,na,na,na,na,na,na,na\np0_core21_temp,na,,na,na,na,na,na,na,na\np0_core22_temp,na,,na,na,na,na,na,na,na\np0_core23_temp,na,,na,na,na,na,na,na,na\np1_core0_temp,na,,na,na,na,na,na,na,na\np1_core1_temp,na,,na,na,na,na,na,na,na\np1_core2_temp,na,,na,na,na,na,na,na,na\np1_core3_temp,na,,na,na,na,na,na,na,na\np1_core4_temp,na,,na,na,na,na,na,na,na\np1_core5_temp,na,,na,na,na,na,na,na,na\np1_core6_temp,na,,na,na,na,na,na,na,na\np1_core7_temp,na,,na,na,na,na,na,na,na\np1_core8_temp,na,,na,na,na,na,na,na,na\np1_core9_temp,na,,na,na,na,na,na,na,na\np1_core10_temp,na,,na,na,na,na,na,na,na\np1_core11_temp,na,,na,na,na,na,na,na,na\np1_core12_temp,na,,na,na,na,na,na,na,na\np1_core13_temp,na,,na,na,na,na,na,na,na\np1_core14_temp,na,,na,na,na,na,na,na,na\np1_core15_temp,na,,na,na,na,na,na,na,na\np1_core16_temp,na,,na,na,na,na,na,na,na\np1_core17_temp,na,,na,na,na,na,na,na,na\np1_core18_temp,na,,na,na,na,na,na,na,na\np1_core19_temp,na,,na,na,na,na,na,na,na\np1_core20_temp,na,,na,na,na,na,na,na,na\np1_core21_temp,na,,na,na,na,na,na,na,na\np1_core22_temp,na,,na,na,na,na,na,na,na\np1_core23_temp,na,,na,na,na,na,na,na,na\nAttemptsLeft,0x0,discrete,0x0300,na,na,na,na,na,na\nOperatingSystemS,0x0,discrete,0x0000,na,na,na,na,na,na\n",
+    "stdout": "BootProgress,0x0,discrete,0x0000,na,na,na,na,na,na\nocc0,na,discrete,na,na,na,na,na,na,na\nocc1,na,discrete,na,na,na,na,na,na,na\ncpu0,na,discrete,na,na,na,na,na,na,na\ncpu1,na,discrete,na,na,na,na,na,na,na\ndimm0,na,discrete,na,na,na,na,na,na,na\ndimm1,na,discrete,na,na,na,na,na,na,na\ndimm2,na,discrete,na,na,na,na,na,na,na\ndimm3,na,discrete,na,na,na,na,na,na,na\ndimm4,na,discrete,na,na,na,na,na,na,na\ndimm5,na,discrete,na,na,na,na,na,na,na\ndimm6,na,discrete,na,na,na,na,na,na,na\ndimm7,na,discrete,na,na,na,na,na,na,na\ndimm8,na,discrete,na,na,na,na,na,na,na\ndimm9,na,discrete,na,na,na,na,na,na,na\ndimm10,na,discrete,na,na,na,na,na,na,na\ndimm11,na,discrete,na,na,na,na,na,na,na\ndimm12,na,discrete,na,na,na,na,na,na,na\ndimm13,na,discrete,na,na,na,na,na,na,na\ndimm14,na,discrete,na,na,na,na,na,na,na\ndimm15,na,discrete,na,na,na,na,na,na,na\ndimm0_temp,na,,na,na,na,na,na,na,na\ndimm1_temp,na,,na,na,na,na,na,na,na\ndimm2_temp,na,,na,na,na,na,na,na,na\ndimm3_temp,na,,na,na,na,na,na,na,na\ndimm4_temp,na,,na,na,na,na,na,na,na\ndimm5_temp,na,,na,na,na,na,na,na,na\ndimm6_temp,na,,na,na,na,na,na,na,na\ndimm7_temp,na,,na,na,na,na,na,na,na\ndimm8_temp,na,,na,na,na,na,na,na,na\ndimm9_temp,na,,na,na,na,na,na,na,na\ndimm10_temp,na,,na,na,na,na,na,na,na\ndimm11_temp,na,,na,na,na,na,na,na,na\ndimm12_temp,na,,na,na,na,na,na,na,na\ndimm13_temp,na,,na,na,na,na,na,na,na\ndimm14_temp,na,,na,na,na,na,na,na,na\ndimm15_temp,na,,na,na,na,na,na,na,na\ncpu0_core0,na,discrete,na,na,na,na,na,na,na\ncpu0_core1,na,discrete,na,na,na,na,na,na,na\ncpu0_core2,na,discrete,na,na,na,na,na,na,na\ncpu0_core3,na,discrete,na,na,na,na,na,na,na\ncpu0_core4,na,discrete,na,na,na,na,na,na,na\ncpu0_core5,na,discrete,na,na,na,na,na,na,na\ncpu0_core6,na,discrete,na,na,na,na,na,na,na\ncpu0_core7,na,discrete,na,na,na,na,na,na,na\ncpu0_core8,na,discrete,na,na,na,na,na,na,na\ncpu0_core9,na,discrete,na,na,na,na,na,na,na\ncpu0_core10,na,discrete,na,na,na,na,na,na,na\ncpu0_core11,na,discrete,na,na,na,na,na,na,na\ncpu0_core12,na,discrete,na,na,na,na,na,na,na\ncpu0_core13,na,discrete,na,na,na,na,na,na,na\ncpu0_core14,na,discrete,na,na,na,na,na,na,na\ncpu0_core15,na,discrete,na,na,na,na,na,na,na\ncpu0_core16,na,discrete,na,na,na,na,na,na,na\ncpu0_core17,na,discrete,na,na,na,na,na,na,na\ncpu0_core18,na,discrete,na,na,na,na,na,na,na\ncpu0_core19,na,discrete,na,na,na,na,na,na,na\ncpu0_core20,na,discrete,na,na,na,na,na,na,na\ncpu0_core21,na,discrete,na,na,na,na,na,na,na\ncpu0_core22,na,discrete,na,na,na,na,na,na,na\ncpu0_core23,na,discrete,na,na,na,na,na,na,na\ncpu1_core0,na,discrete,na,na,na,na,na,na,na\ncpu1_core1,na,discrete,na,na,na,na,na,na,na\ncpu1_core2,na,discrete,na,na,na,na,na,na,na\ncpu1_core3,na,discrete,na,na,na,na,na,na,na\ncpu1_core4,na,discrete,na,na,na,na,na,na,na\ncpu1_core5,na,discrete,na,na,na,na,na,na,na\ncpu1_core6,na,discrete,na,na,na,na,na,na,na\ncpu1_core7,na,discrete,na,na,na,na,na,na,na\ncpu1_core8,na,discrete,na,na,na,na,na,na,na\ncpu1_core9,na,discrete,na,na,na,na,na,na,na\ncpu1_core10,na,discrete,na,na,na,na,na,na,na\ncpu1_core11,na,discrete,na,na,na,na,na,na,na\ncpu1_core12,na,discrete,na,na,na,na,na,na,na\ncpu1_core13,na,discrete,na,na,na,na,na,na,na\ncpu1_core14,na,discrete,na,na,na,na,na,na,na\ncpu1_core15,na,discrete,na,na,na,na,na,na,na\ncpu1_core16,na,discrete,na,na,na,na,na,na,na\ncpu1_core17,na,discrete,na,na,na,na,na,na,na\ncpu1_core18,na,discrete,na,na,na,na,na,na,na\ncpu1_core19,na,discrete,na,na,na,na,na,na,na\ncpu1_core20,na,discrete,na,na,na,na,na,na,na\ncpu1_core21,na,discrete,na,na,na,na,na,na,na\ncpu1_core22,na,discrete,na,na,na,na,na,na,na\ncpu1_core23,na,discrete,na,na,na,na,na,na,na\np0_core0_temp,42.000,degrees C,ok,na,0.000,5.000,80.000,90.000,na\np0_core1_temp,na,,na,na,na,na,na,na,na\np0_core2_temp,na,,na,na,na,na,na,na,na\np0_core3_temp,na,,na,na,na,na,na,na,na\np0_core4_temp,na,,na,na,na,na,na,na,na\np0_core5_temp,na,,na,na,na,na,na,na,na\np0_core6_temp,na,,na,na,na,na,na,na,na\np0_core7_temp,na,,na,na,na,na,na,na,na\np0_core8_temp,na,,na,na,na,na,na,na,na\np0_core9_temp,na,,na,na,na,na,na,na,na\np0_core10_temp,na,,na,na,na,na,na,na,na\np0_core11_temp,na,,na,na,na,na,na,na,na\np0_core12_temp,na,,na,na,na,na,na,na,na\np0_core13_temp,na,,na,na,na,na,na,na,na\np0_core14_temp,na,,na,na,na,na,na,na,na\np0_core15_temp,na,,na,na,na,na,na,na,na\np0_core16_temp,na,,na,na,na,na,na,na,na\np0_core17_temp,na,,na,na,na,na,na,na,na\np0_core18_temp,na,,na,na,na,na,na,na,na\np0_core19_temp,na,,na,na,na,na,na,na,na\np0_core20_temp,na,,na,na,na,na,na,na,na\np0_core21_temp,na,,na,na,na,na,na,na,na\np0_core22_temp,na,,na,na,na,na,na,na,na\np0_core23_temp,na,,na,na,na,na,na,na,na\np1_core0_temp,44.000,degrees C,ok,na,0.000,5.000,80.000,90.000,na\np1_core1_temp,na,,na,na,na,na,na,na,na\np1_core2_temp,na,,na,na,na,na,na,na,na\np1_core3_temp,na,,na,na,na,na,na,na,na\np1_core4_temp,na,,na,na,na,na,na,na,na\np1_core5_temp,na,,na,na,na,na,na,na,na\np1_core6_temp,na,,na,na,na,na,na,na,na\np1_core7_temp,na,,na,na,na,na,na,na,na\np1_core8_temp,na,,na,na,na,na,na,na,na\np1_core9_temp,na,,na,na,na,na,na,na,na\np1_core10_temp,na,,na,na,na,na,na,na,na\np1_core11_temp,na,,na,na,na,na,na,na,na\np1_core12_temp,na,,na,na,na,na,na,na,na\np1_core13_temp,na,,na,na,na,na,na,na,na\np1_core14_temp,na,,na,na,na,na,na,na,na\np1_core15_temp,na,,na,na,na,na,na,na,na\np1_core16_temp,na,,na,na,na,na,na,na,na\np1_core17_temp,na,,na,na,na,na,na,na,na\np1_core18_temp,na,,na,na,na,na,na,na,na\np1_core19_temp,na,,na,na,na,na,na,na,na\np1_core20_temp,na,,na,na,na,na,na,na,na\np1_core21_temp,na,,na,na,na,na,na,na,na\np1_core22_temp,na,,na,na,na,na,na,na,na\np1_core23_temp,na,,na,na,na,na,na,na,na\nAttemptsLeft,0x0,discrete,0x0300,na,na,na,na,na,na\nOperatingSystemS,0x0,discrete,0x0000,na,na,na,na,na,na\n",
     "stderr": ""
   }
 }

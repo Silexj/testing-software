@@ -1,0 +1,38 @@
+$ obmcutil state
+CurrentBMCState     : xyz.openbmc_project.State.BMC.BMCState.Ready
+CurrentPowerState   : xyz.openbmc_project.State.Chassis.PowerState.Off
+CurrentHostState    : xyz.openbmc_project.State.Host.HostState.Off
+BootProgress        : xyz.openbmc_project.State.Boot.Progress.ProgressStages.Unspecified
+OperatingSystemState: xyz.openbmc_project.State.OperatingSystem.Status.OSStatus.Inactive
+
+$ systemctl is-active lab5-cpu-sensors.service lab5-associations.service phosphor-ipmi-host.service
+active
+active
+active
+
+$ busctl list --no-pager | awk '/Hwmon/ {print $1}'
+:1.44
+:1.45
+xyz.openbmc_project.Hwmon-90dc5dd3857daeb224c11f832395c5c454995ef20ee9cda4c1747f544f1f8541.Hwmon1
+xyz.openbmc_project.Hwmon-be3af85815c942eb953efaea0a3d08f00d83e8114bc726ee0719925e9e0a11c7.Hwmon1
+xyz.openbmc_project.Hwmon-lab5.Hwmon1
+
+$ journalctl -u phosphor-ipmi-host.service --no-pager | sed -n '/lab5:/p' | tail -n 4
+Oct 16 15:10:52 romulus ipmid[1571]: lab5: /xyz/openbmc_project/sensors/temperature/p0_core0_temp: scale -3 -> 0 for Celsius hwmon values
+Oct 16 15:10:52 romulus ipmid[1571]: lab5: /xyz/openbmc_project/sensors/temperature/p1_core0_temp: scale -3 -> 0 for Celsius hwmon values
+Oct 16 15:18:24 romulus ipmid[1966]: lab5: /xyz/openbmc_project/sensors/temperature/p0_core0_temp: scale -3 -> 0 for Celsius hwmon values
+Oct 16 15:18:24 romulus ipmid[1966]: lab5: /xyz/openbmc_project/sensors/temperature/p1_core0_temp: scale -3 -> 0 for Celsius hwmon values
+
+$ journalctl -u obmc-power-start@0.service -u obmc-power-stop@0.service -n 12 --no-pager
+Oct 16 15:19:42 romulus obmc-power-stop[2213]: Emulated PSU: Off
+Oct 16 15:19:43 romulus systemd[1]: Finished Start Power Off for Chassis0.
+Oct 16 15:20:21 romulus systemd[1]: obmc-power-stop@0.service: Deactivated successfully.
+Oct 16 15:20:21 romulus systemd[1]: Stopped Start Power Off for Chassis0.
+Oct 16 15:20:28 romulus systemd[1]: Starting Start Power On for Chassis0...
+Oct 16 15:20:30 romulus phosphor-power-start[2319]: Emulated PSU: On
+Oct 16 15:20:30 romulus systemd[1]: Finished Start Power On for Chassis0.
+Oct 16 15:20:45 romulus systemd[1]: obmc-power-start@0.service: Deactivated successfully.
+Oct 16 15:20:45 romulus systemd[1]: Stopped Start Power On for Chassis0.
+Oct 16 15:20:47 romulus systemd[1]: Starting Start Power Off for Chassis0...
+Oct 16 15:20:50 romulus obmc-power-stop[2409]: Emulated PSU: Off
+Oct 16 15:20:50 romulus systemd[1]: Finished Start Power Off for Chassis0.

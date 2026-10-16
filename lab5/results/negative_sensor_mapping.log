@@ -1,0 +1,50 @@
+============================= test session starts ==============================
+platform linux -- Python 3.14.8, pytest-9.1.1, pluggy-1.7.0 -- /home/silex/Documents/unic/testing/.venv-labs/bin/python
+cachedir: .pytest_cache
+rootdir: /home/silex/Documents/unic/testing/testing-software/lab5
+configfile: pytest.ini
+plugins: locust-2.46.7
+collecting ... collected 1 item
+
+lab5/test_redfish.py::test_cpu_redfish_matches_ipmi 
+-------------------------------- live log setup --------------------------------
+INFO POST /redfish/v1/SessionService/Sessions -> 201 (0.371 s)
+INFO GET /redfish/v1/Chassis -> 200 (0.033 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.096 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.166 s)
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/Chassis -> 200 (0.070 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.229 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.186 s)
+INFO GET /redfish/v1/Chassis -> 200 (0.051 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.095 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.104 s)
+FAILED                                                                   [100%]
+------------------------------ live log teardown -------------------------------
+INFO DELETE /redfish/v1/SessionService/Sessions/uzzRiI7djX -> 200 (0.041 s)
+
+
+=================================== FAILURES ===================================
+________________________ test_cpu_redfish_matches_ipmi _________________________
+lab5/test_redfish.py:210: in test_cpu_redfish_matches_ipmi
+    assert len(matched) == 1, f"{sensor['Name']}: IPMI match is missing or ambiguous; set CPU_SENSOR_MAP"
+E   AssertionError: p0 core0 temp: IPMI match is missing or ambiguous; set CPU_SENSOR_MAP
+E   assert 0 == 1
+E    +  where 0 = len([])
+------------------------------ Captured log setup ------------------------------
+INFO     test_redfish:test_redfish.py:44 POST /redfish/v1/SessionService/Sessions -> 201 (0.371 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis -> 200 (0.033 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis/chassis -> 200 (0.096 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.166 s)
+------------------------------ Captured log call -------------------------------
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis -> 200 (0.070 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis/chassis -> 200 (0.229 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.186 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis -> 200 (0.051 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis/chassis -> 200 (0.095 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.104 s)
+---------------------------- Captured log teardown -----------------------------
+INFO     test_redfish:test_redfish.py:44 DELETE /redfish/v1/SessionService/Sessions/uzzRiI7djX -> 200 (0.041 s)
+=========================== short test summary info ============================
+FAILED lab5/test_redfish.py::test_cpu_redfish_matches_ipmi - AssertionError: ...
+============================== 1 failed in 15.09s ==============================

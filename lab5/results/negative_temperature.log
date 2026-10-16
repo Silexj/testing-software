@@ -1,0 +1,38 @@
+============================= test session starts ==============================
+platform linux -- Python 3.14.8, pytest-9.1.1, pluggy-1.7.0 -- /home/silex/Documents/unic/testing/.venv-labs/bin/python
+cachedir: .pytest_cache
+rootdir: /home/silex/Documents/unic/testing/testing-software/lab5
+configfile: pytest.ini
+plugins: locust-2.46.7
+collecting ... collected 1 item
+
+lab5/test_redfish.py::test_cpu_temperature 
+-------------------------------- live log setup --------------------------------
+INFO POST /redfish/v1/SessionService/Sessions -> 201 (0.367 s)
+INFO GET /redfish/v1/Chassis -> 200 (0.027 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.095 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.129 s)
+FAILED                                                                   [100%]
+------------------------------ live log teardown -------------------------------
+INFO DELETE /redfish/v1/SessionService/Sessions/pnBAxijpRn -> 200 (0.019 s)
+
+
+=================================== FAILURES ===================================
+_____________________________ test_cpu_temperature _____________________________
+lab5/test_redfish.py:171: in test_cpu_temperature
+    assert sensor.get("Status", {}).get("Health") == "OK", f"{name}: unhealthy sensor"
+E   AssertionError: p0 core0 temp: unhealthy sensor
+E   assert 'Critical' == 'OK'
+E     
+E     - OK
+E     + Critical
+------------------------------ Captured log setup ------------------------------
+INFO     test_redfish:test_redfish.py:44 POST /redfish/v1/SessionService/Sessions -> 201 (0.367 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis -> 200 (0.027 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis/chassis -> 200 (0.095 s)
+INFO     test_redfish:test_redfish.py:44 GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.129 s)
+---------------------------- Captured log teardown -----------------------------
+INFO     test_redfish:test_redfish.py:44 DELETE /redfish/v1/SessionService/Sessions/pnBAxijpRn -> 200 (0.019 s)
+=========================== short test summary info ============================
+FAILED lab5/test_redfish.py::test_cpu_temperature - AssertionError: p0 core0 ...
+============================== 1 failed in 0.78s ===============================

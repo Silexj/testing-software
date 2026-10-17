@@ -35,6 +35,8 @@ def nmon_network(path):
                 assert headers is not None
                 values.append({key:float(v) for key,v in zip(headers,row[2:])})
             else:headers=row[2:]
+    # Snapshot one precedes the aligned measurement phase.
+    values=values[1:]
     assert values and headers,f'No nmon NET samples: {path}'
     return {'samples':len(values),'mean_kib_s':{key:statistics.mean(row[key] for row in values) for key in headers}}
 

@@ -44,10 +44,10 @@ def measure(pid, destination, seconds, perf, nmon, password, load):
     env = {**os.environ, 'LC_ALL': 'C', 'BMC_URL': BASE, 'BMC_USERNAME': 'root',
            'BMC_PASSWORD': password, 'BMC_VERIFY_TLS': 'false'}
     commands = {
-        'perf': [perf, 'stat', '-x', ';', '-e', 'cycles:u,instructions:u,cache-misses:u',
+        'perf': [perf, 'stat', '--no-scale', '-x', ';', '-e', 'cycles:u,instructions:u,cache-misses:u',
                  '-p', str(pid), '-o', str(destination/'perf.csv'), '--', 'sleep', str(seconds)],
         'vmstat': ['vmstat', '-w', '1', str(seconds+1)],
-        'nmon': [nmon, '-F', str(destination/'network.nmon'), '-s', '1', '-c', str(seconds), '-p'],
+        'nmon': [nmon, '-F', str(destination/'network.nmon'), '-s', '1', '-c', str(seconds+1), '-p'],
     }
     if load:
         commands['locust'] = [sys.executable, '-m', 'locust', '-f', str(ROOT/'lab8/locustfile.py'),
@@ -61,6 +61,14 @@ def measure(pid, destination, seconds, perf, nmon, password, load):
     try:
         nmon_output = command(commands['nmon'], env=env)
         nmon_pid = int(nmon_output.splitlines()[-1])
+        # nmon inventories host devices before collecting. Align the measured
+        # phase with its first completed snapshot and discard that snapshot.
+        deadline = time.monotonic()+60
+        while time.monotonic()<deadline:
+            path=destination/'network.nmon'
+            if path.exists() and 'NET,T0001,' in path.read_text():break
+            time.sleep(.1)
+        else:raise RuntimeError('nmon did not produce its first snapshot')
         for name in ['perf', 'vmstat'] + (['locust'] if load else []):
             stream = (destination/(name+'.log')).open('w'); streams.append(stream)
             processes[name] = subprocess.Popen(commands[name], stdout=stream, stderr=subprocess.STDOUT, env=env)
@@ -87,10 +95,10 @@ def measure(pid, destination, seconds, perf, nmon, password, load):
         if any(codes.values()):
             raise RuntimeError(f'Measurement commands failed: {codes}')
         # nmon forks; wait for its last timestamp and final newline before analysis.
-        deadline = time.monotonic()+5
+        deadline = time.monotonic()+20
         while time.monotonic()<deadline:
             contents=(destination/'network.nmon').read_text()
-            if f'T{seconds:04d}' in contents:
+            if f'NET,T{seconds+1:04d},' in contents:
                 break
             time.sleep(.2)
         else:

@@ -1,0 +1,60 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.1.1, pluggy-1.7.0 -- /opt/lab7-venv/bin/python
+cachedir: .pytest_cache
+rootdir: /var/jenkins_home/workspace/openbmc-lab7/lab7/tests/api
+configfile: pytest.ini
+collecting ... collected 5 items
+
+lab7/tests/api/test_redfish.py::test_authentication 
+-------------------------------- live log setup --------------------------------
+INFO POST /redfish/v1/SessionService/Sessions -> 201 (0.312 s)
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/SessionService/Sessions/Ulxl5MzCHv -> 200 (0.023 s)
+PASSED                                                                   [ 20%]
+lab7/tests/api/test_redfish.py::test_system_information 
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/Systems/system -> 200 (0.165 s)
+INFO System Status={'Health': 'OK', 'State': 'Disabled'} PowerState=Off
+PASSED                                                                   [ 40%]
+lab7/tests/api/test_redfish.py::test_power_on 
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/Systems/system -> 200 (0.131 s)
+INFO Power-on transition starts from confirmed Off
+INFO POST /redfish/v1/Systems/system/Actions/ComputerSystem.Reset -> 204 (0.305 s)
+INFO ResetType=On accepted, HTTP 204; initial=Off
+INFO GET /redfish/v1/Systems/system -> 200 (3.401 s)
+INFO GET /redfish/v1/Systems/system -> 200 (1.036 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.080 s)
+INFO PowerState=On confirmed by a fresh GET
+INFO POST /redfish/v1/Systems/system/Actions/ComputerSystem.Reset -> 204 (0.139 s)
+INFO GET /redfish/v1/Systems/system -> 200 (1.539 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.250 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.099 s)
+INFO Original PowerState=Off restored
+PASSED                                                                   [ 60%]
+lab7/tests/api/test_redfish.py::test_cpu_temperature 
+-------------------------------- live log setup --------------------------------
+INFO GET /redfish/v1/Chassis -> 200 (0.018 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.048 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.041 s)
+-------------------------------- live log call ---------------------------------
+INFO CPU sensor p0 core0 temp = 42.0 Celsius; 4 thresholds checked
+INFO CPU sensor p1 core0 temp = 44.0 Celsius; 4 thresholds checked
+PASSED                                                                   [ 80%]
+lab7/tests/api/test_redfish.py::test_cpu_redfish_matches_ipmi 
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/Chassis -> 200 (0.012 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.034 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.045 s)
+INFO GET /redfish/v1/Chassis -> 200 (0.032 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.040 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.049 s)
+INFO ('/redfish/v1/Chassis/chassis/Thermal', '0'): Redfish 42.0/42.0 C, IPMI 42.0 C, tolerance 2.0 C
+INFO ('/redfish/v1/Chassis/chassis/Thermal', '1'): Redfish 44.0/44.0 C, IPMI 44.0 C, tolerance 2.0 C
+PASSED                                                                   [100%]
+------------------------------ live log teardown -------------------------------
+INFO DELETE /redfish/v1/SessionService/Sessions/Ulxl5MzCHv -> 200 (0.013 s)
+
+
+- generated xml file: /var/jenkins_home/workspace/openbmc-lab7/lab7/artifacts/api/junit.xml -
+============================== 5 passed in 21.11s ==============================

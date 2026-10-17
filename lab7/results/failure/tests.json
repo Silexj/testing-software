@@ -1,0 +1,119 @@
+{
+  "_class": "hudson.tasks.junit.TestResult",
+  "testActions": [],
+  "duration": 139.562,
+  "empty": false,
+  "failCount": 2,
+  "passCount": 3,
+  "skipCount": 0,
+  "suites": [
+    {
+      "cases": [
+        {
+          "testActions": [],
+          "age": 0,
+          "className": "test_redfish",
+          "duration": 2.519,
+          "errorDetails": null,
+          "errorStackTrace": null,
+          "failedSince": 0,
+          "flakyFailures": [],
+          "name": "test_authentication",
+          "properties": {},
+          "rerunFailures": [],
+          "skipped": false,
+          "skippedMessage": null,
+          "status": "PASSED",
+          "stderr": null,
+          "stdout": null
+        },
+        {
+          "testActions": [],
+          "age": 0,
+          "className": "test_redfish",
+          "duration": 1.014,
+          "errorDetails": null,
+          "errorStackTrace": null,
+          "failedSince": 0,
+          "flakyFailures": [],
+          "name": "test_system_information",
+          "properties": {},
+          "rerunFailures": [],
+          "skipped": false,
+          "skippedMessage": null,
+          "status": "PASSED",
+          "stderr": null,
+          "stdout": null
+        },
+        {
+          "testActions": [],
+          "age": 1,
+          "className": "test_redfish",
+          "duration": 114.523,
+          "errorDetails": "Failed: PowerState did not become On; last value=PoweringOn",
+          "errorStackTrace": "redfish = Redfish(http=<requests.sessions.Session object at 0x7f821f339d30>, base='https://127.0.0.1:2443', verify=False, timeout=30.0, login_status=201, location='/redfish/v1/SessionService/Sessions/Afj3ttnY4Q')\n\n    def test_power_on(redfish):\n        \"\"\"TC-API-03: On action, polling and restoration of initial power state.\"\"\"\n        initial = redfish.get(SYSTEM)[\"PowerState\"]\n        assert initial in {\"On\", \"Off\"}, f\"Host is in transition: {initial}\"\n        action = SYSTEM + \"/Actions/ComputerSystem.Reset\"\n        # 202 = asynchronous operation, 204 = synchronous completion allowed by Redfish.\n        try:\n            if initial == \"On\":\n                redfish.request(\"POST\", action, expected=(202, 204), json={\"ResetType\": \"ForceOff\"})\n                wait_power(redfish, \"Off\")\n            LOG.info(\"Power-on transition starts from confirmed Off\")\n            response = redfish.request(\"POST\", action, expected=(202, 204), json={\"ResetType\": \"On\"})\n            LOG.info(\"ResetType=On accepted, HTTP %s; initial=%s\", response.status_code, initial)\n>           wait_power(redfish, \"On\")\n\nlab7/tests/api/test_redfish.py:127: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nclient = Redfish(http=<requests.sessions.Session object at 0x7f821f339d30>, base='https://127.0.0.1:2443', verify=False, timeout=30.0, login_status=201, location='/redfish/v1/SessionService/Sessions/Afj3ttnY4Q')\nstate = 'On'\n\n    def wait_power(client, state):\n        deadline = time.monotonic() + float(os.getenv(\"BMC_POWER_TIMEOUT\", \"90\"))\n        while True:\n            actual = client.get(SYSTEM).get(\"PowerState\")\n            if actual == state:\n                return\n            if time.monotonic() >= deadline:\n>               pytest.fail(f\"PowerState did not become {state}; last value={actual}\")\nE               Failed: PowerState did not become On; last value=PoweringOn\n\nlab7/tests/api/test_redfish.py:110: Failed",
+          "failedSince": 1,
+          "flakyFailures": [],
+          "name": "test_power_on",
+          "properties": {},
+          "rerunFailures": [],
+          "skipped": false,
+          "skippedMessage": null,
+          "status": "FAILED",
+          "stderr": null,
+          "stdout": null
+        },
+        {
+          "testActions": [],
+          "age": 0,
+          "className": "test_redfish",
+          "duration": 0.421,
+          "errorDetails": null,
+          "errorStackTrace": null,
+          "failedSince": 0,
+          "flakyFailures": [],
+          "name": "test_cpu_temperature",
+          "properties": {},
+          "rerunFailures": [],
+          "skipped": false,
+          "skippedMessage": null,
+          "status": "PASSED",
+          "stderr": null,
+          "stdout": null
+        },
+        {
+          "testActions": [],
+          "age": 1,
+          "className": "test_redfish",
+          "duration": 20.53,
+          "errorDetails": "AssertionError: ipmitool failed with exit code 1\nassert 1 == 0\n +  where 1 = CompletedProcess(args=['ipmitool', '-I', 'lanplus', '-H', '127.0.0.1', '-p', '2623', '-U', 'root', '-E', '-c', 'sensor', 'list'], returncode=1, stdout='', stderr='Error: Unable to establish IPMI v2 / RMCP+ session\\n').returncode",
+          "errorStackTrace": "redfish = Redfish(http=<requests.sessions.Session object at 0x7f821f339d30>, base='https://127.0.0.1:2443', verify=False, timeout=30.0, login_status=201, location='/redfish/v1/SessionService/Sessions/Afj3ttnY4Q')\ncpu_sensors = [{'@odata.id': '/redfish/v1/Chassis/chassis/Thermal#/Temperatures/0', '@odata.type': '#Thermal.v1_3_0.Temperature', 'L...', '@odata.type': '#Thermal.v1_3_0.Temperature', 'LowerThresholdCritical': 0.0, 'LowerThresholdNonCritical': 5.0, ...}]\n\n    def test_cpu_redfish_matches_ipmi(redfish, cpu_sensors):\n        \"\"\"TC-API-05: match every CPU temperature by explicit map or unique name.\"\"\"\n        env = os.environ.copy()\n        env[\"IPMI_PASSWORD\"] = os.environ.get(\"IPMI_PASSWORD\", os.environ[\"BMC_PASSWORD\"])\n        command = [\"ipmitool\", \"-I\", \"lanplus\", \"-H\", os.getenv(\"IPMI_HOST\", \"127.0.0.1\"),\n                   \"-p\", os.getenv(\"IPMI_PORT\", \"2623\"), \"-U\", os.getenv(\"IPMI_USERNAME\", \"root\"),\n                   \"-E\", \"-c\", \"sensor\", \"list\"]\n        # Bracket the IPMI sample with two Redfish samples to account for temperature drift.\n        before = {(s[\"_ThermalPath\"], s[\"MemberId\"]): s for s in read_cpu_sensors(redfish)}\n        try:\n            result = subprocess.run(command, env=env, capture_output=True, text=True,\n                                    timeout=60, check=False)\n        except (OSError, subprocess.TimeoutExpired) as exc:\n            pytest.fail(f\"IPMI read failed: {type(exc).__name__}\")\n>       assert result.returncode == 0, f\"ipmitool failed with exit code {result.returncode}\"\nE       AssertionError: ipmitool failed with exit code 1\nE       assert 1 == 0\nE        +  where 1 = CompletedProcess(args=['ipmitool', '-I', 'lanplus', '-H', '127.0.0.1', '-p', '2623', '-U', 'root', '-E', '-c', 'sensor', 'list'], returncode=1, stdout='', stderr='Error: Unable to establish IPMI v2 / RMCP+ session\\n').returncode\n\nlab7/tests/api/test_redfish.py:200: AssertionError",
+          "failedSince": 1,
+          "flakyFailures": [],
+          "name": "test_cpu_redfish_matches_ipmi",
+          "properties": {},
+          "rerunFailures": [],
+          "skipped": false,
+          "skippedMessage": null,
+          "status": "FAILED",
+          "stderr": null,
+          "stdout": null
+        }
+      ],
+      "duration": 139.562,
+      "enclosingBlockNames": [
+        "Redfish API"
+      ],
+      "enclosingBlocks": [
+        "26"
+      ],
+      "id": null,
+      "name": "pytest",
+      "nodeId": "28",
+      "properties": {},
+      "stderr": null,
+      "stdout": null,
+      "timestamp": "2026-10-16T16:13:18.124518+00:00"
+    }
+  ]
+}

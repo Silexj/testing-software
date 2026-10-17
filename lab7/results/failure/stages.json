@@ -1,0 +1,116 @@
+{
+  "_links": {
+    "self": {
+      "href": "/job/openbmc-lab7/1/wfapi/describe"
+    },
+    "artifacts": {
+      "href": "/job/openbmc-lab7/1/wfapi/artifacts"
+    }
+  },
+  "id": "1",
+  "name": "#1",
+  "status": "FAILED",
+  "startTimeMillis": 1792166742537,
+  "endTimeMillis": 1792167343211,
+  "durationMillis": 600674,
+  "queueDurationMillis": 23,
+  "pauseDurationMillis": 0,
+  "stages": [
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/1/execution/node/12/wfapi/describe"
+        }
+      },
+      "id": "12",
+      "name": "Checkout",
+      "execNode": "",
+      "status": "SUCCESS",
+      "startTimeMillis": 1792166753761,
+      "durationMillis": 10039,
+      "pauseDurationMillis": 0
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/1/execution/node/20/wfapi/describe"
+        }
+      },
+      "id": "20",
+      "name": "OpenBMC QEMU",
+      "execNode": "",
+      "status": "SUCCESS",
+      "startTimeMillis": 1792166763839,
+      "durationMillis": 433137,
+      "pauseDurationMillis": 0
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/1/execution/node/26/wfapi/describe"
+        }
+      },
+      "id": "26",
+      "name": "Redfish API",
+      "execNode": "",
+      "status": "FAILED",
+      "error": {
+        "message": "script returned exit code 1",
+        "type": "hudson.AbortException"
+      },
+      "startTimeMillis": 1792167197031,
+      "durationMillis": 143281,
+      "pauseDurationMillis": 0
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/1/execution/node/33/wfapi/describe"
+        }
+      },
+      "id": "33",
+      "name": "Selenium Web UI",
+      "execNode": "",
+      "status": "FAILED",
+      "error": {
+        "message": "script returned exit code 1",
+        "type": "hudson.AbortException"
+      },
+      "startTimeMillis": 1792167340383,
+      "durationMillis": 306,
+      "pauseDurationMillis": 0
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/1/execution/node/38/wfapi/describe"
+        }
+      },
+      "id": "38",
+      "name": "Locust load",
+      "execNode": "",
+      "status": "FAILED",
+      "error": {
+        "message": "script returned exit code 1",
+        "type": "hudson.AbortException"
+      },
+      "startTimeMillis": 1792167340768,
+      "durationMillis": 252,
+      "pauseDurationMillis": 0
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/1/execution/node/43/wfapi/describe"
+        }
+      },
+      "id": "43",
+      "name": "Declarative: Post Actions",
+      "execNode": "",
+      "status": "SUCCESS",
+      "startTimeMillis": 1792167341174,
+      "durationMillis": 1212,
+      "pauseDurationMillis": 0
+    }
+  ]
+}

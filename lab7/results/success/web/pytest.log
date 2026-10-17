@@ -1,0 +1,13 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.1.1, pluggy-1.7.0 -- /opt/lab7-venv/bin/python
+cachedir: .pytest_cache
+rootdir: /var/jenkins_home/workspace/openbmc-lab7
+collecting ... collected 4 items
+
+lab7/tests/web/test_webui.py::test_valid_login PASSED                    [ 25%]
+lab7/tests/web/test_webui.py::test_invalid_login PASSED                  [ 50%]
+lab7/tests/web/test_webui.py::test_power_controls PASSED                 [ 75%]
+lab7/tests/web/test_webui.py::test_cpu_sensors PASSED                    [100%]
+
+- generated xml file: /var/jenkins_home/workspace/openbmc-lab7/lab7/artifacts/web/junit.xml -
+============================== 4 passed in 10.19s ==============================

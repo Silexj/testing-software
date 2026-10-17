@@ -1,0 +1,40 @@
+{
+  "@odata.id": "/redfish/v1/Chassis/chassis/Thermal",
+  "@odata.type": "#Thermal.v1_4_0.Thermal",
+  "Fans": [],
+  "Id": "Thermal",
+  "Name": "Thermal",
+  "Redundancy": [],
+  "Temperatures": [
+    {
+      "@odata.id": "/redfish/v1/Chassis/chassis/Thermal#/Temperatures/0",
+      "@odata.type": "#Thermal.v1_3_0.Temperature",
+      "LowerThresholdCritical": 0.0,
+      "LowerThresholdNonCritical": 5.0,
+      "MemberId": "0",
+      "Name": "p0 core0 temp",
+      "ReadingCelsius": 42.0,
+      "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+      },
+      "UpperThresholdCritical": 90.0,
+      "UpperThresholdNonCritical": 80.0
+    },
+    {
+      "@odata.id": "/redfish/v1/Chassis/chassis/Thermal#/Temperatures/1",
+      "@odata.type": "#Thermal.v1_3_0.Temperature",
+      "LowerThresholdCritical": 0.0,
+      "LowerThresholdNonCritical": 5.0,
+      "MemberId": "1",
+      "Name": "p1 core0 temp",
+      "ReadingCelsius": 44.0,
+      "Status": {
+        "Health": "OK",
+        "State": "Enabled"
+      },
+      "UpperThresholdCritical": 90.0,
+      "UpperThresholdNonCritical": 80.0
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "users": 10,
+  "duration_seconds": 30,
+  "locust_exit_code": 0,
+  "requests": 160,
+  "failures": 0,
+  "average_ms": 150.78446460624917,
+  "p95_ms": 420.0,
+  "rps": 5.349122601510386,
+  "peak_users": 10,
+  "logins": 10,
+  "logouts": 10,
+  "gates": {
+    "locust_process": true,
+    "both_read_operations": true,
+    "ten_concurrent_users": true,
+    "zero_request_failures": true,
+    "p95_at_most_5000ms": true,
+    "all_sessions_closed": true
+  }
+}

@@ -1,0 +1,212 @@
+Started by user labadmin
+Obtained Jenkinsfile from git https://github.com/Silexj/testing-software.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/openbmc-lab7
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $BMC_PASSWORD
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timeout
+Timeout set to expire in 20 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] deleteDir
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/Silexj/testing-software.git
+ > git init /var/jenkins_home/workspace/openbmc-lab7 # timeout=10
+Fetching upstream changes from https://github.com/Silexj/testing-software.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Silexj/testing-software.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/Silexj/testing-software.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+ > git rev-parse refs/remotes/origin/lab7-jenkins-ci^{commit} # timeout=10
+Checking out Revision 293793ba479e5e3596d9f580db58f5743fe50f36 (refs/remotes/origin/lab7-jenkins-ci)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 293793ba479e5e3596d9f580db58f5743fe50f36 # timeout=10
+Commit message: "Wait for rejected-login navigation and bound unauthenticated browser request"
+ > git rev-list --no-walk 104029b166307535ef774ec1e768473c1ff8891c # timeout=10
+[Pipeline] sh
++ mkdir -p lab7/artifacts/checkout
++ git rev-parse HEAD
++ python --version
++ qemu-system-arm --version
++ chromium --version
++ chromedriver --version
++ pip freeze
+Post stage
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (OpenBMC QEMU)
+[Pipeline] sh
++ mkdir -p lab7/artifacts/qemu
++ python lab7/scripts/start_qemu.py
+OpenBMC is ready; initial PowerState=Off
++ python lab7/setup_qemu_lab.py install --qemu --build
++ python lab7/scripts/check_ready.py
+Native hwmon -> Redfish ready: CPU temperatures 42/44 Celsius
+Post stage
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Redfish API)
+[Pipeline] sh
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.1.1, pluggy-1.7.0 -- /opt/lab7-venv/bin/python
+cachedir: .pytest_cache
+rootdir: /var/jenkins_home/workspace/openbmc-lab7/lab7/tests/api
+configfile: pytest.ini
+collecting ... collected 5 items
+
+lab7/tests/api/test_redfish.py::test_authentication 
+-------------------------------- live log setup --------------------------------
+INFO POST /redfish/v1/SessionService/Sessions -> 201 (0.312 s)
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/SessionService/Sessions/Ulxl5MzCHv -> 200 (0.023 s)
+PASSED                                                                   [ 20%]
+lab7/tests/api/test_redfish.py::test_system_information 
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/Systems/system -> 200 (0.165 s)
+INFO System Status={'Health': 'OK', 'State': 'Disabled'} PowerState=Off
+PASSED                                                                   [ 40%]
+lab7/tests/api/test_redfish.py::test_power_on 
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/Systems/system -> 200 (0.131 s)
+INFO Power-on transition starts from confirmed Off
+INFO POST /redfish/v1/Systems/system/Actions/ComputerSystem.Reset -> 204 (0.305 s)
+INFO ResetType=On accepted, HTTP 204; initial=Off
+INFO GET /redfish/v1/Systems/system -> 200 (3.401 s)
+INFO GET /redfish/v1/Systems/system -> 200 (1.036 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.080 s)
+INFO PowerState=On confirmed by a fresh GET
+INFO POST /redfish/v1/Systems/system/Actions/ComputerSystem.Reset -> 204 (0.139 s)
+INFO GET /redfish/v1/Systems/system -> 200 (1.539 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.250 s)
+INFO GET /redfish/v1/Systems/system -> 200 (0.099 s)
+INFO Original PowerState=Off restored
+PASSED                                                                   [ 60%]
+lab7/tests/api/test_redfish.py::test_cpu_temperature 
+-------------------------------- live log setup --------------------------------
+INFO GET /redfish/v1/Chassis -> 200 (0.018 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.048 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.041 s)
+-------------------------------- live log call ---------------------------------
+INFO CPU sensor p0 core0 temp = 42.0 Celsius; 4 thresholds checked
+INFO CPU sensor p1 core0 temp = 44.0 Celsius; 4 thresholds checked
+PASSED                                                                   [ 80%]
+lab7/tests/api/test_redfish.py::test_cpu_redfish_matches_ipmi 
+-------------------------------- live log call ---------------------------------
+INFO GET /redfish/v1/Chassis -> 200 (0.012 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.034 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.045 s)
+INFO GET /redfish/v1/Chassis -> 200 (0.032 s)
+INFO GET /redfish/v1/Chassis/chassis -> 200 (0.040 s)
+INFO GET /redfish/v1/Chassis/chassis/Thermal -> 200 (0.049 s)
+INFO ('/redfish/v1/Chassis/chassis/Thermal', '0'): Redfish 42.0/42.0 C, IPMI 42.0 C, tolerance 2.0 C
+INFO ('/redfish/v1/Chassis/chassis/Thermal', '1'): Redfish 44.0/44.0 C, IPMI 44.0 C, tolerance 2.0 C
+PASSED                                                                   [100%]
+------------------------------ live log teardown -------------------------------
+INFO DELETE /redfish/v1/SessionService/Sessions/Ulxl5MzCHv -> 200 (0.013 s)
+
+
+- generated xml file: /var/jenkins_home/workspace/openbmc-lab7/lab7/artifacts/api/junit.xml -
+============================== 5 passed in 21.11s ==============================
+Post stage
+[Pipeline] junit
+Recording test results
+[Checks API] No suitable checks publisher found.
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Selenium Web UI)
+[Pipeline] sh
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.1.1, pluggy-1.7.0 -- /opt/lab7-venv/bin/python
+cachedir: .pytest_cache
+rootdir: /var/jenkins_home/workspace/openbmc-lab7
+collecting ... collected 4 items
+
+lab7/tests/web/test_webui.py::test_valid_login PASSED                    [ 25%]
+lab7/tests/web/test_webui.py::test_invalid_login PASSED                  [ 50%]
+lab7/tests/web/test_webui.py::test_power_controls PASSED                 [ 75%]
+lab7/tests/web/test_webui.py::test_cpu_sensors PASSED                    [100%]
+
+- generated xml file: /var/jenkins_home/workspace/openbmc-lab7/lab7/artifacts/web/junit.xml -
+============================== 4 passed in 10.19s ==============================
+Post stage
+[Pipeline] junit
+Recording test results
+[Checks API] No suitable checks publisher found.
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Locust load)
+[Pipeline] sh
++ python lab7/scripts/run_load.py
+{
+  "users": 10,
+  "duration_seconds": 30,
+  "locust_exit_code": 0,
+  "requests": 160,
+  "failures": 0,
+  "average_ms": 150.78446460624917,
+  "p95_ms": 420.0,
+  "rps": 5.349122601510386,
+  "peak_users": 10,
+  "logins": 10,
+  "logouts": 10,
+  "gates": {
+    "locust_process": true,
+    "both_read_operations": true,
+    "ten_concurrent_users": true,
+    "zero_request_failures": true,
+    "p95_at_most_5000ms": true,
+    "all_sessions_closed": true
+  }
+}
+Post stage
+[Pipeline] junit
+Recording test results
+[Checks API] No suitable checks publisher found.
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] sh
++ python lab7/scripts/stop_qemu.py
+Workspace QEMU cleaned up
+[Pipeline] archiveArtifacts
+Archiving artifacts
+Recording fingerprints
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

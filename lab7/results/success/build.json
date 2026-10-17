@@ -1,0 +1,305 @@
+{
+  "_class": "org.jenkinsci.plugins.workflow.job.WorkflowRun",
+  "actions": [
+    {
+      "_class": "hudson.model.ParametersAction",
+      "parameters": [
+        {
+          "_class": "hudson.model.BooleanParameterValue",
+          "name": "INJECT_API_FAILURE",
+          "value": false
+        }
+      ]
+    },
+    {
+      "_class": "hudson.model.CauseAction",
+      "causes": [
+        {
+          "_class": "hudson.model.Cause$UserIdCause",
+          "shortDescription": "Started by user labadmin",
+          "userId": "labadmin",
+          "userName": "labadmin"
+        }
+      ]
+    },
+    {
+      "_class": "org.jenkinsci.plugins.workflow.libs.LibrariesAction"
+    },
+    {},
+    {},
+    {
+      "_class": "hudson.plugins.git.util.BuildData",
+      "buildsByBranchName": {
+        "refs/remotes/origin/lab7-jenkins-ci": {
+          "_class": "hudson.plugins.git.util.Build",
+          "buildNumber": 4,
+          "buildResult": null,
+          "marked": {
+            "SHA1": "293793ba479e5e3596d9f580db58f5743fe50f36",
+            "branch": [
+              {
+                "SHA1": "293793ba479e5e3596d9f580db58f5743fe50f36",
+                "name": "refs/remotes/origin/lab7-jenkins-ci"
+              }
+            ]
+          },
+          "revision": {
+            "SHA1": "293793ba479e5e3596d9f580db58f5743fe50f36",
+            "branch": [
+              {
+                "SHA1": "293793ba479e5e3596d9f580db58f5743fe50f36",
+                "name": "refs/remotes/origin/lab7-jenkins-ci"
+              }
+            ]
+          }
+        }
+      },
+      "lastBuiltRevision": {
+        "SHA1": "293793ba479e5e3596d9f580db58f5743fe50f36",
+        "branch": [
+          {
+            "SHA1": "293793ba479e5e3596d9f580db58f5743fe50f36",
+            "name": "refs/remotes/origin/lab7-jenkins-ci"
+          }
+        ]
+      },
+      "remoteUrls": [
+        "https://github.com/Silexj/testing-software.git"
+      ],
+      "scmName": ""
+    },
+    {},
+    {
+      "_class": "hudson.tasks.junit.TestResultAction",
+      "failCount": 0,
+      "skipCount": 0,
+      "totalCount": 15,
+      "urlName": "testReport"
+    },
+    {},
+    {},
+    {},
+    {},
+    {
+      "_class": "org.jenkinsci.plugins.displayurlapi.actions.RunDisplayAction"
+    },
+    {
+      "_class": "org.jenkinsci.plugins.pipeline.modeldefinition.actions.RestartDeclarativePipelineAction"
+    },
+    {},
+    {
+      "_class": "org.jenkinsci.plugins.workflow.job.views.FlowGraphAction"
+    },
+    {},
+    {}
+  ],
+  "artifacts": [
+    {
+      "displayPath": null,
+      "fileName": "junit.xml",
+      "relativePath": "lab7/artifacts/api/junit.xml"
+    },
+    {
+      "displayPath": null,
+      "fileName": "pytest.log",
+      "relativePath": "lab7/artifacts/api/pytest.log"
+    },
+    {
+      "displayPath": null,
+      "fileName": "commit.txt",
+      "relativePath": "lab7/artifacts/checkout/commit.txt"
+    },
+    {
+      "displayPath": null,
+      "fileName": "packages.txt",
+      "relativePath": "lab7/artifacts/checkout/packages.txt"
+    },
+    {
+      "displayPath": null,
+      "fileName": "tools.txt",
+      "relativePath": "lab7/artifacts/checkout/tools.txt"
+    },
+    {
+      "displayPath": null,
+      "fileName": "bmc.html",
+      "relativePath": "lab7/artifacts/load/bmc.html"
+    },
+    {
+      "displayPath": null,
+      "fileName": "bmc_exceptions.csv",
+      "relativePath": "lab7/artifacts/load/bmc_exceptions.csv"
+    },
+    {
+      "displayPath": null,
+      "fileName": "bmc_failures.csv",
+      "relativePath": "lab7/artifacts/load/bmc_failures.csv"
+    },
+    {
+      "displayPath": null,
+      "fileName": "bmc_final_stats.csv",
+      "relativePath": "lab7/artifacts/load/bmc_final_stats.csv"
+    },
+    {
+      "displayPath": null,
+      "fileName": "bmc_stats.csv",
+      "relativePath": "lab7/artifacts/load/bmc_stats.csv"
+    },
+    {
+      "displayPath": null,
+      "fileName": "bmc_stats_history.csv",
+      "relativePath": "lab7/artifacts/load/bmc_stats_history.csv"
+    },
+    {
+      "displayPath": null,
+      "fileName": "junit.xml",
+      "relativePath": "lab7/artifacts/load/junit.xml"
+    },
+    {
+      "displayPath": null,
+      "fileName": "locust.log",
+      "relativePath": "lab7/artifacts/load/locust.log"
+    },
+    {
+      "displayPath": null,
+      "fileName": "summary.json",
+      "relativePath": "lab7/artifacts/load/summary.json"
+    },
+    {
+      "displayPath": null,
+      "fileName": "boot.json",
+      "relativePath": "lab7/artifacts/qemu/boot.json"
+    },
+    {
+      "displayPath": null,
+      "fileName": "cleanup.json",
+      "relativePath": "lab7/artifacts/qemu/cleanup.json"
+    },
+    {
+      "displayPath": null,
+      "fileName": "console.log",
+      "relativePath": "lab7/artifacts/qemu/console.log"
+    },
+    {
+      "displayPath": null,
+      "fileName": "hardware.log",
+      "relativePath": "lab7/artifacts/qemu/hardware.log"
+    },
+    {
+      "displayPath": null,
+      "fileName": "thermal.json",
+      "relativePath": "lab7/artifacts/qemu/thermal.json"
+    },
+    {
+      "displayPath": null,
+      "fileName": "junit.xml",
+      "relativePath": "lab7/artifacts/web/junit.xml"
+    },
+    {
+      "displayPath": null,
+      "fileName": "pytest.log",
+      "relativePath": "lab7/artifacts/web/pytest.log"
+    },
+    {
+      "displayPath": null,
+      "fileName": "rejected-login.json",
+      "relativePath": "lab7/artifacts/web/rejected-login.json"
+    },
+    {
+      "displayPath": null,
+      "fileName": "test_cpu_sensors.html",
+      "relativePath": "lab7/artifacts/web/test_cpu_sensors.html"
+    },
+    {
+      "displayPath": null,
+      "fileName": "test_cpu_sensors.png",
+      "relativePath": "lab7/artifacts/web/test_cpu_sensors.png"
+    },
+    {
+      "displayPath": null,
+      "fileName": "test_invalid_login.html",
+      "relativePath": "lab7/artifacts/web/test_invalid_login.html"
+    },
+    {
+      "displayPath": null,
+      "fileName": "test_invalid_login.png",
+      "relativePath": "lab7/artifacts/web/test_invalid_login.png"
+    },
+    {
+      "displayPath": null,
+      "fileName": "test_power_controls.html",
+      "relativePath": "lab7/artifacts/web/test_power_controls.html"
+    },
+    {
+      "displayPath": null,
+      "fileName": "test_power_controls.png",
+      "relativePath": "lab7/artifacts/web/test_power_controls.png"
+    },
+    {
+      "displayPath": null,
+      "fileName": "test_valid_login.html",
+      "relativePath": "lab7/artifacts/web/test_valid_login.html"
+    },
+    {
+      "displayPath": null,
+      "fileName": "test_valid_login.png",
+      "relativePath": "lab7/artifacts/web/test_valid_login.png"
+    }
+  ],
+  "building": false,
+  "description": null,
+  "displayName": "#4",
+  "duration": 135187,
+  "estimatedDuration": 212008,
+  "executor": null,
+  "fullDisplayName": "openbmc-lab7 #4",
+  "id": "4",
+  "keepLog": false,
+  "number": 4,
+  "queueId": 7,
+  "result": "SUCCESS",
+  "timestamp": 1792204549099,
+  "url": "http://127.0.0.1:8080/job/openbmc-lab7/4/",
+  "changeSets": [
+    {
+      "_class": "hudson.plugins.git.GitChangeSetList",
+      "items": [
+        {
+          "_class": "hudson.plugins.git.GitChangeSet",
+          "affectedPaths": [
+            "lab7/tests/web/test_webui.py"
+          ],
+          "commitId": "293793ba479e5e3596d9f580db58f5743fe50f36",
+          "timestamp": 1792204529000,
+          "author": {
+            "absoluteUrl": "http://127.0.0.1:8080/user/silex2dev",
+            "fullName": "silex2dev"
+          },
+          "authorEmail": "silex2dev@gmai.com",
+          "comment": "Wait for rejected-login navigation and bound unauthenticated browser request\n",
+          "date": "2026-10-17 09:35:29 +0700",
+          "id": "293793ba479e5e3596d9f580db58f5743fe50f36",
+          "msg": "Wait for rejected-login navigation and bound unauthenticated browser request",
+          "paths": [
+            {
+              "editType": "edit",
+              "file": "lab7/tests/web/test_webui.py"
+            }
+          ]
+        }
+      ],
+      "kind": "git"
+    }
+  ],
+  "culprits": [
+    {
+      "absoluteUrl": "http://127.0.0.1:8080/user/silex2dev",
+      "fullName": "silex2dev"
+    }
+  ],
+  "inProgress": false,
+  "nextBuild": null,
+  "previousBuild": {
+    "number": 3,
+    "url": "http://127.0.0.1:8080/job/openbmc-lab7/3/"
+  }
+}

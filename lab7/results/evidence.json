@@ -1,0 +1,123 @@
+{
+  "success": {
+    "build": 4,
+    "result": "SUCCESS",
+    "tested_commit": "293793ba479e5e3596d9f580db58f5743fe50f36",
+    "duration_ms": 135187,
+    "test_counts": {
+      "passCount": 15,
+      "failCount": 0,
+      "skipCount": 0
+    },
+    "stages": [
+      {
+        "name": "Checkout",
+        "status": "SUCCESS",
+        "duration_ms": 2510
+      },
+      {
+        "name": "OpenBMC QEMU",
+        "status": "SUCCESS",
+        "duration_ms": 64805
+      },
+      {
+        "name": "Redfish API",
+        "status": "SUCCESS",
+        "duration_ms": 21557
+      },
+      {
+        "name": "Selenium Web UI",
+        "status": "SUCCESS",
+        "duration_ms": 10571
+      },
+      {
+        "name": "Locust load",
+        "status": "SUCCESS",
+        "duration_ms": 32278
+      },
+      {
+        "name": "Declarative: Post Actions",
+        "status": "SUCCESS",
+        "duration_ms": 405
+      }
+    ],
+    "cleanup": {
+      "qemu_stopped": true,
+      "owned_pid_found": true
+    },
+    "load": {
+      "users": 10,
+      "duration_seconds": 30,
+      "locust_exit_code": 0,
+      "requests": 160,
+      "failures": 0,
+      "average_ms": 150.78446460624917,
+      "p95_ms": 420.0,
+      "rps": 5.349122601510386,
+      "peak_users": 10,
+      "logins": 10,
+      "logouts": 10,
+      "gates": {
+        "locust_process": true,
+        "both_read_operations": true,
+        "ten_concurrent_users": true,
+        "zero_request_failures": true,
+        "p95_at_most_5000ms": true,
+        "all_sessions_closed": true
+      }
+    },
+    "rejected_login": {
+      "login_path": "/redfish/v1/SessionService/Sessions",
+      "login_status": 401,
+      "protected_resource_status": 401
+    }
+  },
+  "failure": {
+    "build": 1,
+    "result": "FAILURE",
+    "tested_commit": "efce5c20accc1981b8a83af5af2fc86b4558a705",
+    "duration_ms": 600674,
+    "test_counts": {
+      "passCount": 3,
+      "failCount": 2,
+      "skipCount": 0
+    },
+    "stages": [
+      {
+        "name": "Checkout",
+        "status": "SUCCESS",
+        "duration_ms": 10039
+      },
+      {
+        "name": "OpenBMC QEMU",
+        "status": "SUCCESS",
+        "duration_ms": 433137
+      },
+      {
+        "name": "Redfish API",
+        "status": "FAILED",
+        "duration_ms": 143281
+      },
+      {
+        "name": "Selenium Web UI",
+        "status": "FAILED",
+        "duration_ms": 306
+      },
+      {
+        "name": "Locust load",
+        "status": "FAILED",
+        "duration_ms": 252
+      },
+      {
+        "name": "Declarative: Post Actions",
+        "status": "SUCCESS",
+        "duration_ms": 1212
+      }
+    ],
+    "cleanup": {
+      "qemu_stopped": true,
+      "owned_pid_found": true
+    },
+    "description": "Initial real cold-stand defect before mailbox and IPMI socket preparation fixes. Not an injected failure."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "command": [
+    "qemu-system-arm",
+    "-m",
+    "256",
+    "-M",
+    "romulus-bmc",
+    "-nographic",
+    "-drive",
+    "file=/var/jenkins_home/workspace/openbmc-lab7/.runtime/openbmc.mtd,format=raw,if=mtd",
+    "-net",
+    "nic",
+    "-net",
+    "user,hostfwd=tcp:127.0.0.1:2222-:22,hostfwd=tcp:127.0.0.1:2443-:443,hostfwd=udp:127.0.0.1:2623-:623,hostname=qemu"
+  ],
+  "pid": 1114,
+  "firmware_sha256": "75b357eefd912c95917e0b66e4856325c4b6014bd2c486f5711d68ce6c479342",
+  "ready": true,
+  "initial_power_state": "Off",
+  "boot_seconds": 41.77
+}

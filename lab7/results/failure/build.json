@@ -1,0 +1,157 @@
+{
+  "_class": "org.jenkinsci.plugins.workflow.job.WorkflowRun",
+  "actions": [
+    {
+      "_class": "hudson.model.CauseAction",
+      "causes": [
+        {
+          "_class": "hudson.model.Cause$UserIdCause",
+          "shortDescription": "Started by user labadmin",
+          "userId": "labadmin",
+          "userName": "labadmin"
+        }
+      ]
+    },
+    {
+      "_class": "org.jenkinsci.plugins.workflow.libs.LibrariesAction"
+    },
+    {},
+    {},
+    {
+      "_class": "hudson.plugins.git.util.BuildData",
+      "buildsByBranchName": {
+        "refs/remotes/origin/lab7-jenkins-ci": {
+          "_class": "hudson.plugins.git.util.Build",
+          "buildNumber": 1,
+          "buildResult": null,
+          "marked": {
+            "SHA1": "efce5c20accc1981b8a83af5af2fc86b4558a705",
+            "branch": [
+              {
+                "SHA1": "efce5c20accc1981b8a83af5af2fc86b4558a705",
+                "name": "refs/remotes/origin/lab7-jenkins-ci"
+              }
+            ]
+          },
+          "revision": {
+            "SHA1": "efce5c20accc1981b8a83af5af2fc86b4558a705",
+            "branch": [
+              {
+                "SHA1": "efce5c20accc1981b8a83af5af2fc86b4558a705",
+                "name": "refs/remotes/origin/lab7-jenkins-ci"
+              }
+            ]
+          }
+        }
+      },
+      "lastBuiltRevision": {
+        "SHA1": "efce5c20accc1981b8a83af5af2fc86b4558a705",
+        "branch": [
+          {
+            "SHA1": "efce5c20accc1981b8a83af5af2fc86b4558a705",
+            "name": "refs/remotes/origin/lab7-jenkins-ci"
+          }
+        ]
+      },
+      "remoteUrls": [
+        "https://github.com/Silexj/testing-software.git"
+      ],
+      "scmName": ""
+    },
+    {},
+    {
+      "_class": "hudson.tasks.junit.TestResultAction",
+      "failCount": 2,
+      "skipCount": 0,
+      "totalCount": 5,
+      "urlName": "testReport"
+    },
+    {},
+    {},
+    {},
+    {},
+    {
+      "_class": "org.jenkinsci.plugins.displayurlapi.actions.RunDisplayAction"
+    },
+    {
+      "_class": "org.jenkinsci.plugins.pipeline.modeldefinition.actions.RestartDeclarativePipelineAction"
+    },
+    {},
+    {
+      "_class": "org.jenkinsci.plugins.workflow.job.views.FlowGraphAction"
+    },
+    {},
+    {}
+  ],
+  "artifacts": [
+    {
+      "displayPath": "junit.xml",
+      "fileName": "junit.xml",
+      "relativePath": "lab7/artifacts/api/junit.xml"
+    },
+    {
+      "displayPath": "pytest.log",
+      "fileName": "pytest.log",
+      "relativePath": "lab7/artifacts/api/pytest.log"
+    },
+    {
+      "displayPath": "commit.txt",
+      "fileName": "commit.txt",
+      "relativePath": "lab7/artifacts/checkout/commit.txt"
+    },
+    {
+      "displayPath": "packages.txt",
+      "fileName": "packages.txt",
+      "relativePath": "lab7/artifacts/checkout/packages.txt"
+    },
+    {
+      "displayPath": "tools.txt",
+      "fileName": "tools.txt",
+      "relativePath": "lab7/artifacts/checkout/tools.txt"
+    },
+    {
+      "displayPath": "boot.json",
+      "fileName": "boot.json",
+      "relativePath": "lab7/artifacts/qemu/boot.json"
+    },
+    {
+      "displayPath": "cleanup.json",
+      "fileName": "cleanup.json",
+      "relativePath": "lab7/artifacts/qemu/cleanup.json"
+    },
+    {
+      "displayPath": "console.log",
+      "fileName": "console.log",
+      "relativePath": "lab7/artifacts/qemu/console.log"
+    },
+    {
+      "displayPath": "hardware.log",
+      "fileName": "hardware.log",
+      "relativePath": "lab7/artifacts/qemu/hardware.log"
+    },
+    {
+      "displayPath": "thermal.json",
+      "fileName": "thermal.json",
+      "relativePath": "lab7/artifacts/qemu/thermal.json"
+    }
+  ],
+  "building": false,
+  "description": null,
+  "displayName": "#1",
+  "duration": 600674,
+  "estimatedDuration": 600674,
+  "executor": null,
+  "fullDisplayName": "openbmc-lab7 #1",
+  "id": "1",
+  "keepLog": false,
+  "number": 1,
+  "queueId": 1,
+  "result": "FAILURE",
+  "timestamp": 1792166742514,
+  "url": "http://127.0.0.1:8080/job/openbmc-lab7/1/",
+  "changeSets": [],
+  "culprits": [],
+  "inProgress": false,
+  "nextBuild": null,
+  "previousBuild": null
+}

@@ -1,0 +1,107 @@
+{
+  "_links": {
+    "self": {
+      "href": "/job/openbmc-lab7/4/wfapi/describe"
+    },
+    "changesets": {
+      "href": "/job/openbmc-lab7/4/wfapi/changesets"
+    },
+    "artifacts": {
+      "href": "/job/openbmc-lab7/4/wfapi/artifacts"
+    }
+  },
+  "id": "4",
+  "name": "#4",
+  "status": "SUCCESS",
+  "startTimeMillis": 1792204549104,
+  "endTimeMillis": 1792204684291,
+  "durationMillis": 135187,
+  "queueDurationMillis": 5,
+  "pauseDurationMillis": 0,
+  "stages": [
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/4/execution/node/12/wfapi/describe"
+        }
+      },
+      "id": "12",
+      "name": "Checkout",
+      "execNode": "",
+      "status": "SUCCESS",
+      "startTimeMillis": 1792204552008,
+      "durationMillis": 2510,
+      "pauseDurationMillis": 0
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/4/execution/node/20/wfapi/describe"
+        }
+      },
+      "id": "20",
+      "name": "OpenBMC QEMU",
+      "execNode": "",
+      "status": "SUCCESS",
+      "startTimeMillis": 1792204554528,
+      "durationMillis": 64805,
+      "pauseDurationMillis": 0
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/4/execution/node/26/wfapi/describe"
+        }
+      },
+      "id": "26",
+      "name": "Redfish API",
+      "execNode": "",
+      "status": "SUCCESS",
+      "startTimeMillis": 1792204619345,
+      "durationMillis": 21557,
+      "pauseDurationMillis": 0
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/4/execution/node/33/wfapi/describe"
+        }
+      },
+      "id": "33",
+      "name": "Selenium Web UI",
+      "execNode": "",
+      "status": "SUCCESS",
+      "startTimeMillis": 1792204640918,
+      "durationMillis": 10571,
+      "pauseDurationMillis": 0
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/4/execution/node/40/wfapi/describe"
+        }
+      },
+      "id": "40",
+      "name": "Locust load",
+      "execNode": "",
+      "status": "SUCCESS",
+      "startTimeMillis": 1792204651501,
+      "durationMillis": 32278,
+      "pauseDurationMillis": 0
+    },
+    {
+      "_links": {
+        "self": {
+          "href": "/job/openbmc-lab7/4/execution/node/47/wfapi/describe"
+        }
+      },
+      "id": "47",
+      "name": "Declarative: Post Actions",
+      "execNode": "",
+      "status": "SUCCESS",
+      "startTimeMillis": 1792204683793,
+      "durationMillis": 405,
+      "pauseDurationMillis": 0
+    }
+  ]
+}

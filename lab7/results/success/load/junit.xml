@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="Locust acceptance gates" tests="6" failures="0" errors="0" skipped="0" time="30.402"><testcase classname="load" name="locust_process" /><testcase classname="load" name="both_read_operations" /><testcase classname="load" name="ten_concurrent_users" /><testcase classname="load" name="zero_request_failures" /><testcase classname="load" name="p95_at_most_5000ms" /><testcase classname="load" name="all_sessions_closed" /></testsuite>

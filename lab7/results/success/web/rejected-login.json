@@ -1,0 +1,5 @@
+{
+  "login_path": "/redfish/v1/SessionService/Sessions",
+  "login_status": 401,
+  "protected_resource_status": 401
+}

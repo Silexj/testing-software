@@ -1,0 +1,34 @@
+{
+  "perf": [
+    "/home/silex/Documents/unic/testing/testing-software/.runtime/lab8/binroot/usr/bin/perf",
+    "stat",
+    "--no-scale",
+    "-x",
+    ";",
+    "-e",
+    "cycles:u,instructions:u,cache-misses:u",
+    "-p",
+    "25321",
+    "-o",
+    "/home/silex/Documents/unic/testing/testing-software/lab8/results/baseline/idle/perf.csv",
+    "--",
+    "sleep",
+    "60"
+  ],
+  "vmstat": [
+    "vmstat",
+    "-w",
+    "1",
+    "61"
+  ],
+  "nmon": [
+    "/home/silex/Documents/unic/testing/testing-software/.runtime/lab8/binroot/usr/bin/nmon",
+    "-F",
+    "/home/silex/Documents/unic/testing/testing-software/lab8/results/baseline/idle/network.nmon",
+    "-s",
+    "1",
+    "-c",
+    "61",
+    "-p"
+  ]
+}

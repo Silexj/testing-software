@@ -10,6 +10,7 @@
 | 5 | [lab5-redfish-pytest](https://github.com/Silexj/testing-software/tree/lab5-redfish-pytest/lab5) | Redfish API, PyTest, сравнение с IPMI |
 | 6 | [lab6-locust](https://github.com/Silexj/testing-software/tree/lab6-locust/lab6) | Locust, OpenBMC и публичные API |
 | 7 | [lab7-jenkins-ci](https://github.com/Silexj/testing-software/tree/lab7-jenkins-ci/lab7) | Jenkins в Docker, Pipeline QEMU/API/Web UI/Locust |
+| 8 | [lab8-profiling](https://github.com/Silexj/testing-software/tree/lab8-profiling/lab8) | Профилирование QEMU: perf, vmstat, nmon и сравнение параметров TCG |
 
 `main` содержит общие инструкции и стенд. Ветки лабораторных независимы:
 для следующей работы выполнить `git switch main`, затем `git switch -c labN-topic`.

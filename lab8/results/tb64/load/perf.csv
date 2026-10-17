@@ -1,0 +1,8 @@
+# started on Sat Oct 17 10:02:42 2026
+
+4018012341;;cpu_atom/cycles/u;2431457367;6.00;;
+120590514251;;cpu_core/cycles/u;32340970371;93.00;;
+6333830038;;cpu_atom/instructions/u;2431457367;6.00;;
+346761873008;;cpu_core/instructions/u;32340986705;93.00;;
+26124098;;cpu_atom/cache-misses/u;2431457367;6.00;;
+459903085;;cpu_core/cache-misses/u;32340996623;93.00;;

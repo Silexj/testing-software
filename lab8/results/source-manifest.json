@@ -1,0 +1,10 @@
+{
+  "measurement_source_commit": "e5374c2f38d6360b9487cf2f33081e8e47494567",
+  "files": {
+    "lab8/run_profile.py": "50b8f39f0e355d92254b4de881b42d3d8a1b9e951912b06d12ab5e77c0bf955b",
+    "lab8/analyze_results.py": "48f45911e43d994d0c3e539eca4f58cb80f10d255583eaa08cb6af06d0fdefbb",
+    "lab8/locustfile.py": "38644c1b2b1d078bdaf054e010d0aaaf3532fd6a8a96b1de21367e9853cdb037",
+    "lab8/Dockerfile": "f7f2a69678ced17743e4267bb08b312f0c01c0387fd5783e5ada98cb2ddb33c6",
+    "lab8/requirements.txt": "3f1042980f07c00d3c7ad00ef8172b198822028f82bcf6f1aed00d710f1eba69"
+  }
+}

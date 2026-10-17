@@ -1,0 +1,18 @@
+{
+  "packages_downloaded_from": "Fedora official fedora/updates repositories",
+  "system_packages_changed": false,
+  "sysctl_changed": false,
+  "local_rpm_packages": [
+    {
+      "filename": "nmon-16s-2.fc44.x86_64.rpm",
+      "sha256": "dc0e34c5b149da15ea00f7cb2b0362d1d441ebf1228940c29a58a73e9f190e4f",
+      "package": "nmon 16s-2.fc44 x86_64"
+    },
+    {
+      "filename": "perf-7.2.10-200.fc44.x86_64.rpm",
+      "sha256": "5616093ef60b42e4fbc2661aac5a056208558244e17d5e9155ea512b5df72d61",
+      "package": "perf 7.2.10-200.fc44 x86_64"
+    }
+  ],
+  "vmstat_version": "vmstat from procps-ng 4.0.6"
+}

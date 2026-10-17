@@ -1,0 +1,498 @@
+{
+  "baseline": {
+    "environment": {
+      "firmware_sha256": "75b357eefd912c95917e0b66e4856325c4b6014bd2c486f5711d68ce6c479342",
+      "docker_command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "testing-software-lab8-baseline",
+        "--label",
+        "testing-software.lab=8",
+        "--user",
+        "1000:1000",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "-p",
+        "127.0.0.1:2443:2443",
+        "-v",
+        "/home/silex/Documents/unic/testing/testing-software/.runtime/lab8/baseline:/work:Z",
+        "testing-software-qemu:lab8",
+        "-m",
+        "256",
+        "-M",
+        "romulus-bmc",
+        "-display",
+        "none",
+        "-serial",
+        "stdio",
+        "-monitor",
+        "none",
+        "-accel",
+        "tcg",
+        "-drive",
+        "file=/work/openbmc.mtd,format=raw,if=mtd",
+        "-net",
+        "nic",
+        "-net",
+        "user,hostfwd=tcp:0.0.0.0:2443-:443,hostname=qemu"
+      ],
+      "qemu_arguments": [
+        "-m",
+        "256",
+        "-M",
+        "romulus-bmc",
+        "-display",
+        "none",
+        "-serial",
+        "stdio",
+        "-monitor",
+        "none",
+        "-accel",
+        "tcg",
+        "-drive",
+        "file=/work/openbmc.mtd,format=raw,if=mtd",
+        "-net",
+        "nic",
+        "-net",
+        "user,hostfwd=tcp:0.0.0.0:2443-:443,hostname=qemu"
+      ],
+      "tb_size_mib": null,
+      "logical_cpus": 12,
+      "kernel": "7.2.10-200.fc44.x86_64",
+      "perf_event_paranoid": "2",
+      "phase_seconds": 60,
+      "warmup_seconds": 30,
+      "ready": true,
+      "qemu_host_pid": 25321,
+      "image_id": "sha256:f8f30c4fac03e6a1422ecb48441887ac846c15b8b66affe7cb10ff84a677fc18",
+      "qemu_version": "QEMU emulator version 10.0.13 (Debian 1:10.0.13+ds-0+deb13u1)\nCopyright (c) 2003-2025 Fabrice Bellard and the QEMU Project developers",
+      "perf_version": "perf version 7.2.10-200.fc44.x86_64",
+      "locust_version": "locust 2.46.7 from /home/silex/Documents/unic/testing/.venv-labs/lib64/python3.14/site-packages/locust (Python 3.14.8)",
+      "boot_seconds": 46.67
+    },
+    "phases": {
+      "idle": {
+        "host_cpu_busy_pct": {
+          "mean": 10.090495,
+          "min": 4.5492,
+          "max": 29.0058
+        },
+        "host_iowait_pct": {
+          "mean": 0.08648333333333333,
+          "min": 0.0,
+          "max": 0.4115
+        },
+        "qemu_cpu_one_core_pct": {
+          "mean": 23.04996,
+          "min": 19.9997,
+          "max": 27.0017
+        },
+        "qemu_rss_mib": {
+          "mean": 630.2227,
+          "min": 630.2227,
+          "max": 630.2227
+        },
+        "perf": {
+          "cycles": 30637673886.0,
+          "instructions": 64181894711.0,
+          "cache-misses": 130784652.0,
+          "ipc": 2.0948683947030378,
+          "pmus": [
+            {
+              "event": "cpu_atom/cycles/u",
+              "value": 6085745384.0,
+              "running_pct": 26.0
+            },
+            {
+              "event": "cpu_core/cycles/u",
+              "value": 24551928502.0,
+              "running_pct": 73.0
+            },
+            {
+              "event": "cpu_atom/instructions/u",
+              "value": 8696974572.0,
+              "running_pct": 26.0
+            },
+            {
+              "event": "cpu_core/instructions/u",
+              "value": 55484920139.0,
+              "running_pct": 73.0
+            },
+            {
+              "event": "cpu_atom/cache-misses/u",
+              "value": 35059175.0,
+              "running_pct": 26.0
+            },
+            {
+              "event": "cpu_core/cache-misses/u",
+              "value": 95725477.0,
+              "running_pct": 73.0
+            }
+          ]
+        },
+        "vmstat": {
+          "samples": 60,
+          "cpu_busy_pct": 10.233333333333333,
+          "iowait_pct": 0.0
+        },
+        "network": {
+          "samples": 60,
+          "mean_kib_s": {
+            "lo-read-KB/s": 254.955,
+            "wlp3s0-read-KB/s": 254.87833333333333,
+            "docker0-read-KB/s": 0.01,
+            "tun0-read-KB/s": 528.36,
+            "vethce1896d-read-KB/s": 0.01,
+            "lo-write-KB/s": 254.955,
+            "wlp3s0-write-KB/s": 16.743333333333332,
+            "docker0-write-KB/s": 0.023333333333333334,
+            "tun0-write-KB/s": 528.3533333333334,
+            "vethce1896d-write-KB/s": 0.028333333333333335
+          }
+        }
+      },
+      "load": {
+        "host_cpu_busy_pct": {
+          "mean": 14.335455,
+          "min": 9.6614,
+          "max": 31.4662
+        },
+        "host_iowait_pct": {
+          "mean": 0.09341666666666666,
+          "min": 0.0,
+          "max": 0.578
+        },
+        "qemu_cpu_one_core_pct": {
+          "mean": 62.78313166666667,
+          "min": 39.9994,
+          "max": 102.9998
+        },
+        "qemu_rss_mib": {
+          "mean": 632.4474333333333,
+          "min": 632.2891,
+          "max": 632.5391
+        },
+        "perf": {
+          "cycles": 136421273379.0,
+          "instructions": 354299920536.0,
+          "cache-misses": 697522383.0,
+          "ipc": 2.5971016965345166,
+          "pmus": [
+            {
+              "event": "cpu_atom/cycles/u",
+              "value": 5806568710.0,
+              "running_pct": 8.0
+            },
+            {
+              "event": "cpu_core/cycles/u",
+              "value": 130614704669.0,
+              "running_pct": 91.0
+            },
+            {
+              "event": "cpu_atom/instructions/u",
+              "value": 8303451402.0,
+              "running_pct": 8.0
+            },
+            {
+              "event": "cpu_core/instructions/u",
+              "value": 345996469134.0,
+              "running_pct": 91.0
+            },
+            {
+              "event": "cpu_atom/cache-misses/u",
+              "value": 42173281.0,
+              "running_pct": 8.0
+            },
+            {
+              "event": "cpu_core/cache-misses/u",
+              "value": 655349102.0,
+              "running_pct": 91.0
+            }
+          ]
+        },
+        "vmstat": {
+          "samples": 60,
+          "cpu_busy_pct": 14.35,
+          "iowait_pct": 0.0
+        },
+        "network": {
+          "samples": 60,
+          "mean_kib_s": {
+            "lo-read-KB/s": 42.73166666666667,
+            "wlp3s0-read-KB/s": 20.599999999999998,
+            "docker0-read-KB/s": 15.271666666666667,
+            "tun0-read-KB/s": 50.53666666666667,
+            "vethce1896d-read-KB/s": 15.561666666666667,
+            "lo-write-KB/s": 42.73166666666667,
+            "wlp3s0-write-KB/s": 7.163333333333333,
+            "docker0-write-KB/s": 2.715,
+            "tun0-write-KB/s": 50.535,
+            "vethce1896d-write-KB/s": 2.715
+          }
+        }
+      }
+    },
+    "load": {
+      "requests": 301,
+      "failures": 0,
+      "average_ms": 195.17106887044287,
+      "p95_ms": 400.0,
+      "rps": 5.021570763858971,
+      "peak_users": 10,
+      "logins": 10,
+      "logouts": 10
+    }
+  },
+  "tb64": {
+    "environment": {
+      "firmware_sha256": "75b357eefd912c95917e0b66e4856325c4b6014bd2c486f5711d68ce6c479342",
+      "docker_command": [
+        "docker",
+        "run",
+        "-d",
+        "--name",
+        "testing-software-lab8-tb64",
+        "--label",
+        "testing-software.lab=8",
+        "--user",
+        "1000:1000",
+        "--cap-drop",
+        "ALL",
+        "--security-opt",
+        "no-new-privileges",
+        "-p",
+        "127.0.0.1:2443:2443",
+        "-v",
+        "/home/silex/Documents/unic/testing/testing-software/.runtime/lab8/tb64:/work:Z",
+        "testing-software-qemu:lab8",
+        "-m",
+        "256",
+        "-M",
+        "romulus-bmc",
+        "-display",
+        "none",
+        "-serial",
+        "stdio",
+        "-monitor",
+        "none",
+        "-accel",
+        "tcg,tb-size=64",
+        "-drive",
+        "file=/work/openbmc.mtd,format=raw,if=mtd",
+        "-net",
+        "nic",
+        "-net",
+        "user,hostfwd=tcp:0.0.0.0:2443-:443,hostname=qemu"
+      ],
+      "qemu_arguments": [
+        "-m",
+        "256",
+        "-M",
+        "romulus-bmc",
+        "-display",
+        "none",
+        "-serial",
+        "stdio",
+        "-monitor",
+        "none",
+        "-accel",
+        "tcg,tb-size=64",
+        "-drive",
+        "file=/work/openbmc.mtd,format=raw,if=mtd",
+        "-net",
+        "nic",
+        "-net",
+        "user,hostfwd=tcp:0.0.0.0:2443-:443,hostname=qemu"
+      ],
+      "tb_size_mib": 64,
+      "logical_cpus": 12,
+      "kernel": "7.2.10-200.fc44.x86_64",
+      "perf_event_paranoid": "2",
+      "phase_seconds": 60,
+      "warmup_seconds": 30,
+      "ready": true,
+      "qemu_host_pid": 26605,
+      "image_id": "sha256:f8f30c4fac03e6a1422ecb48441887ac846c15b8b66affe7cb10ff84a677fc18",
+      "qemu_version": "QEMU emulator version 10.0.13 (Debian 1:10.0.13+ds-0+deb13u1)\nCopyright (c) 2003-2025 Fabrice Bellard and the QEMU Project developers",
+      "perf_version": "perf version 7.2.10-200.fc44.x86_64",
+      "locust_version": "locust 2.46.7 from /home/silex/Documents/unic/testing/.venv-labs/lib64/python3.14/site-packages/locust (Python 3.14.8)",
+      "boot_seconds": 48.31
+    },
+    "phases": {
+      "idle": {
+        "host_cpu_busy_pct": {
+          "mean": 8.45937,
+          "min": 2.8216,
+          "max": 17.1031
+        },
+        "host_iowait_pct": {
+          "mean": 0.115455,
+          "min": 0.0,
+          "max": 1.2386
+        },
+        "qemu_cpu_one_core_pct": {
+          "mean": 22.433255,
+          "min": 18.9993,
+          "max": 26.0001
+        },
+        "qemu_rss_mib": {
+          "mean": 492.9375,
+          "min": 492.9375,
+          "max": 492.9375
+        },
+        "perf": {
+          "cycles": 28845918679.0,
+          "instructions": 64276610762.0,
+          "cache-misses": 108803805.0,
+          "ipc": 2.2282740056670045,
+          "pmus": [
+            {
+              "event": "cpu_atom/cycles/u",
+              "value": 5510757828.0,
+              "running_pct": 25.0
+            },
+            {
+              "event": "cpu_core/cycles/u",
+              "value": 23335160851.0,
+              "running_pct": 74.0
+            },
+            {
+              "event": "cpu_atom/instructions/u",
+              "value": 8458698241.0,
+              "running_pct": 25.0
+            },
+            {
+              "event": "cpu_core/instructions/u",
+              "value": 55817912521.0,
+              "running_pct": 74.0
+            },
+            {
+              "event": "cpu_atom/cache-misses/u",
+              "value": 30322894.0,
+              "running_pct": 25.0
+            },
+            {
+              "event": "cpu_core/cache-misses/u",
+              "value": 78480911.0,
+              "running_pct": 74.0
+            }
+          ]
+        },
+        "vmstat": {
+          "samples": 60,
+          "cpu_busy_pct": 8.533333333333333,
+          "iowait_pct": 0.016666666666666666
+        },
+        "network": {
+          "samples": 60,
+          "mean_kib_s": {
+            "lo-read-KB/s": 138.77666666666667,
+            "wlp3s0-read-KB/s": 122.13833333333334,
+            "docker0-read-KB/s": 0.006666666666666667,
+            "tun0-read-KB/s": 288.295,
+            "veth30064a2-read-KB/s": 0.006666666666666667,
+            "lo-write-KB/s": 138.77666666666667,
+            "wlp3s0-write-KB/s": 28.208333333333332,
+            "docker0-write-KB/s": 0.02,
+            "tun0-write-KB/s": 288.495,
+            "veth30064a2-write-KB/s": 0.025
+          }
+        }
+      },
+      "load": {
+        "host_cpu_busy_pct": {
+          "mean": 11.163183333333333,
+          "min": 4.9669,
+          "max": 32.6716
+        },
+        "host_iowait_pct": {
+          "mean": 0.08413166666666666,
+          "min": 0.0,
+          "max": 0.7444
+        },
+        "qemu_cpu_one_core_pct": {
+          "mean": 58.24979833333333,
+          "min": 31.0012,
+          "max": 91.9961
+        },
+        "qemu_rss_mib": {
+          "mean": 492.95570666666663,
+          "min": 491.5781,
+          "max": 493.3477
+        },
+        "perf": {
+          "cycles": 124608526592.0,
+          "instructions": 353095703046.0,
+          "cache-misses": 486027183.0,
+          "ipc": 2.8336399819743083,
+          "pmus": [
+            {
+              "event": "cpu_atom/cycles/u",
+              "value": 4018012341.0,
+              "running_pct": 6.0
+            },
+            {
+              "event": "cpu_core/cycles/u",
+              "value": 120590514251.0,
+              "running_pct": 93.0
+            },
+            {
+              "event": "cpu_atom/instructions/u",
+              "value": 6333830038.0,
+              "running_pct": 6.0
+            },
+            {
+              "event": "cpu_core/instructions/u",
+              "value": 346761873008.0,
+              "running_pct": 93.0
+            },
+            {
+              "event": "cpu_atom/cache-misses/u",
+              "value": 26124098.0,
+              "running_pct": 6.0
+            },
+            {
+              "event": "cpu_core/cache-misses/u",
+              "value": 459903085.0,
+              "running_pct": 93.0
+            }
+          ]
+        },
+        "vmstat": {
+          "samples": 60,
+          "cpu_busy_pct": 11.233333333333333,
+          "iowait_pct": 0.03333333333333333
+        },
+        "network": {
+          "samples": 60,
+          "mean_kib_s": {
+            "lo-read-KB/s": 35.04333333333334,
+            "wlp3s0-read-KB/s": 8.628333333333334,
+            "docker0-read-KB/s": 15.166666666666666,
+            "tun0-read-KB/s": 34.11333333333333,
+            "veth30064a2-read-KB/s": 15.446666666666667,
+            "lo-write-KB/s": 35.04333333333334,
+            "wlp3s0-write-KB/s": 9.426666666666666,
+            "docker0-write-KB/s": 2.671666666666667,
+            "tun0-write-KB/s": 34.108333333333334,
+            "veth30064a2-write-KB/s": 2.671666666666667
+          }
+        }
+      }
+    },
+    "load": {
+      "requests": 297,
+      "failures": 0,
+      "average_ms": 150.9442115218989,
+      "p95_ms": 330.0,
+      "rps": 4.954399595094971,
+      "peak_users": 10,
+      "logins": 10,
+      "logouts": 10
+    }
+  }
+}

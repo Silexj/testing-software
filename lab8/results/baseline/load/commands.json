@@ -1,0 +1,57 @@
+{
+  "perf": [
+    "/home/silex/Documents/unic/testing/testing-software/.runtime/lab8/binroot/usr/bin/perf",
+    "stat",
+    "--no-scale",
+    "-x",
+    ";",
+    "-e",
+    "cycles:u,instructions:u,cache-misses:u",
+    "-p",
+    "25321",
+    "-o",
+    "/home/silex/Documents/unic/testing/testing-software/lab8/results/baseline/load/perf.csv",
+    "--",
+    "sleep",
+    "60"
+  ],
+  "vmstat": [
+    "vmstat",
+    "-w",
+    "1",
+    "61"
+  ],
+  "nmon": [
+    "/home/silex/Documents/unic/testing/testing-software/.runtime/lab8/binroot/usr/bin/nmon",
+    "-F",
+    "/home/silex/Documents/unic/testing/testing-software/lab8/results/baseline/load/network.nmon",
+    "-s",
+    "1",
+    "-c",
+    "61",
+    "-p"
+  ],
+  "locust": [
+    "/home/silex/Documents/unic/testing/.venv-labs/bin/python",
+    "-m",
+    "locust",
+    "-f",
+    "/home/silex/Documents/unic/testing/testing-software/lab8/locustfile.py",
+    "OpenBMCUser",
+    "--headless",
+    "--users",
+    "10",
+    "--spawn-rate",
+    "2",
+    "--run-time",
+    "60s",
+    "--stop-timeout",
+    "20",
+    "--only-summary",
+    "--csv",
+    "/home/silex/Documents/unic/testing/testing-software/lab8/results/baseline/load/bmc",
+    "--csv-full-history",
+    "--html",
+    "/home/silex/Documents/unic/testing/testing-software/lab8/results/baseline/load/bmc.html"
+  ]
+}

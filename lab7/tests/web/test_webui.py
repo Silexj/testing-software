@@ -20,7 +20,8 @@ SUBMIT = (By.CSS_SELECTOR, "button[type='submit'], button[data-test-id='login-bu
 def sign_in(browser, username, password):
     browser.get(BASE + '/#/login')
     wait = WebDriverWait(browser, 45, ignored_exceptions=(StaleElementReferenceException,))
-    wait.until(EC.visibility_of_element_located(USER)).send_keys(username)
+    browser.login_username = wait.until(EC.visibility_of_element_located(USER))
+    browser.login_username.send_keys(username)
     browser.find_element(*PASSWORD).send_keys(password)
     wait.until(EC.element_to_be_clickable(SUBMIT)).click()
     return wait
@@ -56,13 +57,21 @@ def test_invalid_login(browser):
                         rejected.update(login_path=path, login_status=status)
         return bool(rejected)
     wait.until(rejected_login)
+    # Wait for the 401 interceptor's navigation to finish before running JS.
+    wait.until(EC.staleness_of(browser.login_username))
     wait.until(EC.visibility_of_element_located(USER))
+    wait.until(lambda driver: driver.execute_script('return document.readyState') == 'complete')
     assert 'login' in browser.current_url
     # A retained login form alone would not prove that access is denied.
     status = browser.execute_async_script("""
         const done = arguments[arguments.length - 1];
-        fetch('/redfish/v1/Systems/system', {credentials: 'same-origin'})
-          .then(response => done(response.status)).catch(() => done(0));
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 10000);
+        fetch('/redfish/v1/Systems/system', {
+          credentials: 'omit', headers: {'X-Requested-With': 'XMLHttpRequest'},
+          signal: controller.signal
+        }).then(response => { clearTimeout(timer); done(response.status); })
+          .catch(() => { clearTimeout(timer); done(0); });
     """)
     assert status in [401, 403], f'Unauthenticated protected resource returned {status}'
     rejected['protected_resource_status'] = status

@@ -8,3 +8,4 @@ __pycache__/
 *.log
 !lab*/results/*.log
 reports/qa/
+!lab8/results/**/*.log
